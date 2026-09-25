@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #D1DDF5;
+    color: #152C59;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    margin-top: 65px;
+}
+
+.logo img {
+    width: 350px;
+    height: auto;
+    display: block;
+}
+
+.card {
+    width: min(760px, calc(100% - 40px));
+    margin-top: 65px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card h1 {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card > p {
+    font-size: 9px;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.card input {
+    width: 100%;
+    height: 30px;
+
+    border: none;
+    border-radius: 5px;
+
+    padding: 0 12px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+
+    outline: none;
+
+    margin-bottom: 12px;
+}
+
+.separador {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0;
+}
+
+.separador::before,
+.separador::after {
+    content: "";
+    height: 1px;
+    background-color: #E5E5E5;
+    flex: 1;
+}
+
+.separador span {
+    font-size: 9px;
+    color: #8A8A8A;
+}
+
+.btn-continuar {
+    width: 100%;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    color: #152C59;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+
+.btn-continuar {
+    width: 100%;
+    height: 30px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: #F5F5F5;
+    color: #152C59;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+
+    cursor: pointer;
+
+    margin-bottom: 5px;
+}
+
+.btn-continuar i {
+    font-size: 12px;
+}
+
+.btn-continuar p {
+    margin: 0;
+    font-size: 9px;
+}
+
+.termos {
+    margin-top: 14px;
+    font-size: 9px;
+    color: #808080;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.rodape {
+    margin-top: 65px;
+    font-size: 9px;
+    color: #808080;
+}
+
+.rodape a {
+    color: #152C59;
+}
+
+.btn-primario {
+    width: 100%;
+    height: 29px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: #06648C;
+    color: #FFFFFF;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+
+    cursor: pointer;
+}
+
+.btn-primario:hover {
+    background-color: #055775;
+}
+
+.btn-primario {
+    transition: 0.2s;
+}
