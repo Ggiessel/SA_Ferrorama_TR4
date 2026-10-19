@@ -1,0 +1,175 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #eef0f3;
+    color: #2b2b2b;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+    position: relative;
+}
+
+h1 i {
+    position: absolute;
+    left: 16px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Seção de seleção de rota */
+.rotas {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.rotas h2 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.rotas select {
+    display: block;
+    width: 140px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d5d9e0;
+    background-color: #fff;
+    font-size: 13px;
+    color: #444;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Card geral */
+.card {
+    background-color: transparent;
+}
+
+/* Grid de horários */
+.grid-horarios-leitura {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 480px;
+    margin: 0 auto 20px auto;
+}
+
+.card-horario-div {
+    background-color: #dce6fb;
+    color: #2b4a8c;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* Painéis inferiores (Status e Alertas) */
+.secao-paineis-informativos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.painel-card {
+    background-color: #dce6fb;
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.painel-card h2 {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #2b3a55;
+    margin-bottom: 8px;
+}
+
+.divisor-tracejado {
+    border-top: 1px dashed #a9b8d6;
+    margin-bottom: 10px;
+}
+
+/* Status: linhas */
+.status-linhas-wrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+.bloco-linha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.label-linha {
+    font-size: 11px;
+    font-weight: 600;
+    color: #3b4a68;
+}
+
+.badge-status-leitura {
+    background-color: #ffffff;
+    color: #2b4a8c;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Alertas */
+.caixa-mensagem-alerta {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.emoji-alerta {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.caixa-mensagem-alerta p {
+    font-size: 11px;
+    color: #3b4a68;
+    line-height: 1.4;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .grid-horarios-leitura,
+    .secao-paineis-informativos {
+        max-width: 100%;
+    }
+}

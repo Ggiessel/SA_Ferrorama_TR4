@@ -1,0 +1,474 @@
+/*
+============================================================
+  FERRORAMA — CADASTRO DE CARGAS
+  Arquivo: style.css
+============================================================
+
+  CSS puro, sem frameworks.
+  Seletores baseados apenas em tags/classes já existentes no HTML.
+
+  IMPORTANTE:
+  - O mockup possui um botão "Salvar" e um menu hambúrguer,
+    mas esses elementos não existem no HTML atual.
+  - O CSS abaixo reproduz visualmente ambos sem alterar o HTML.
+  - O "Salvar" criado por ::after é apenas visual, não é um
+    botão HTML funcional.
+*/
+
+/* ============================================================
+   1. RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   2. VARIÁVEIS
+   ============================================================ */
+
+:root {
+    /* Cores aproximadas do mockup */
+    --color-bg: #d1ddf5;
+    --color-surface: #ffffff;
+    --color-primary: #08698f;
+    --color-primary-hover: #075a7a;
+    --color-primary-active: #054c67;
+    --color-text: #000000;
+    --color-text-muted: #4b4b4b;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-focus: rgba(8, 105, 143, 0.28);
+
+    /* Tipografia */
+    --font-family: Arial, Helvetica, sans-serif;
+    --font-size-title: 2rem;
+    --font-size-label: 1.28rem;
+    --font-size-field: 0.72rem;
+    --font-size-button: 1.28rem;
+
+    /* Espaçamentos */
+    --space-xs: 0.4rem;
+    --space-sm: 0.75rem;
+    --space-md: 1.25rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+
+    /* Medidas */
+    --content-max-width: 1080px;
+    --field-width: 320px;
+    --date-field-width: 175px;
+    --button-width: 240px;
+    --button-height: 72px;
+    --radius-sm: 5px;
+    --radius-md: 8px;
+    --radius-lg: 18px;
+
+    /* Sombras */
+    --shadow-button: 0 3px 6px rgba(0, 0, 0, 0.08);
+    --shadow-field: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+/* ============================================================
+   3. TIPOGRAFIA / ELEMENTOS GERAIS
+   ============================================================ */
+
+body {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    padding: 3.25rem 7.8% 3.5rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family);
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+h1 {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 3.8rem;
+    color: var(--color-text);
+    font-size: var(--font-size-title);
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: none;
+}
+
+/* ============================================================
+   4. HEADER
+   ============================================================ */
+
+/*
+  Como o HTML não possui <header>, o próprio h1 funciona como
+  referência visual para o cabeçalho.
+*/
+
+h1::before {
+    content: "";
+    position: absolute;
+    top: 0.05rem;
+    left: -2.4rem;
+    width: 2rem;
+    height: 1.5rem;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 0.08rem,
+            #343434 0.08rem,
+            #343434 0.17rem,
+            transparent 0.17rem,
+            transparent 0.67rem,
+            #343434 0.67rem,
+            #343434 0.76rem,
+            transparent 0.76rem,
+            transparent 1.26rem,
+            #343434 1.26rem,
+            #343434 1.35rem,
+            transparent 1.35rem
+        );
+    opacity: 0.95;
+}
+
+/* ============================================================
+   5. MAIN / FORMULÁRIO
+   ============================================================ */
+
+/*
+  O HTML atual não possui <main>. O primeiro div filho do body
+  funciona como container principal.
+*/
+
+body > div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: var(--content-max-width);
+    min-height: 390px;
+    margin: 0 auto;
+    padding-right: 43%;
+}
+
+body > div:first-of-type > div {
+    width: 100%;
+    margin-bottom: 3.8rem;
+}
+
+body > div:first-of-type > div:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================================
+   6. LABELS
+   ============================================================ */
+
+b {
+    display: block;
+    margin: 0 0 0.55rem 0.1rem;
+    color: var(--color-text);
+    font-size: var(--font-size-label);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+/* ============================================================
+   7. SELECTS / CAMPOS
+   ============================================================ */
+
+.select-wrapper {
+    position: relative;
+    width: var(--field-width);
+    max-width: 100%;
+}
+
+.select-wrapper select {
+    display: block;
+    width: 100%;
+    height: 27px;
+    padding: 0.2rem 1.8rem 0.2rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    font-family: var(--font-family);
+    font-size: var(--font-size-field);
+    font-weight: 400;
+    appearance: auto;
+    cursor: pointer;
+    outline: none;
+    box-shadow: var(--shadow-field);
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.12s ease,
+        background-color 0.18s ease;
+}
+
+.select-wrapper select:hover {
+    background-color: #fafafa;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.select-wrapper select:focus {
+    border-color: var(--color-primary);
+    box-shadow:
+        0 0 0 3px var(--color-focus),
+        var(--shadow-field);
+}
+
+.select-wrapper select:active {
+    transform: translateY(1px);
+}
+
+/* ============================================================
+   8. CAMPOS DE DATA
+   ============================================================ */
+
+.selects {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.selects .select-wrapper {
+    width: var(--date-field-width);
+}
+
+.selects .select-wrapper:first-child,
+.selects .select-wrapper:last-child {
+    width: 175px;
+}
+
+/* ============================================================
+   9. BOTÃO "SALVAR" — REPRESENTAÇÃO VISUAL
+   ============================================================ */
+
+/*
+  O botão não existe no HTML atual.
+  body::after reproduz apenas a aparência do mockup.
+*/
+
+body::after {
+    content: "Salvar";
+    position: absolute;
+    right: 13.6%;
+    bottom: 6.8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-width);
+    min-height: var(--button-height);
+    border: 1px solid rgba(0, 0, 0, 0.35);
+    border-radius: var(--radius-lg);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    font-family: var(--font-family);
+    font-size: var(--font-size-button);
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+/* ============================================================
+   10. FOOTER
+   ============================================================ */
+
+/* O mockup/HTML não possui footer, portanto não há regra aplicada. */
+
+/* ============================================================
+   11. ACESSIBILIDADE / ESTADOS
+   ============================================================ */
+
+::selection {
+    background: rgba(8, 105, 143, 0.2);
+}
+
+select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   12. RESPONSIVIDADE — TABLET
+   Até 768px
+   ============================================================ */
+
+@media (max-width: 768px) {
+    :root {
+        --font-size-title: 1.8rem;
+        --font-size-label: 1.15rem;
+        --button-width: 220px;
+    }
+
+    body {
+        padding: 2.5rem 6% 3rem;
+    }
+
+    h1 {
+        margin-bottom: 3rem;
+    }
+
+    h1::before {
+        left: -1.4rem;
+        transform: scale(0.9);
+        transform-origin: left center;
+    }
+
+    body > div:first-of-type {
+        padding-right: 30%;
+    }
+
+    body > div:first-of-type > div {
+        margin-bottom: 3rem;
+    }
+
+    .select-wrapper {
+        width: min(var(--field-width), 100%);
+    }
+
+    .selects {
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .selects .select-wrapper:first-child,
+    .selects .select-wrapper:last-child {
+        width: min(175px, 48%);
+    }
+
+    body::after {
+        right: 7%;
+        bottom: 4%;
+        width: var(--button-width);
+        min-height: 64px;
+    }
+}
+
+/* ============================================================
+   13. RESPONSIVIDADE — CELULAR
+   Até 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+    :root {
+        --font-size-title: 1.55rem;
+        --font-size-label: 1rem;
+        --font-size-button: 1.08rem;
+    }
+
+    body {
+        display: block;
+        min-height: 100vh;
+        padding: 1.8rem 1.25rem 6.5rem;
+    }
+
+    h1 {
+        margin-bottom: 2.7rem;
+        padding: 0 1.5rem;
+        font-size: var(--font-size-title);
+    }
+
+    h1::before {
+        left: 0;
+        top: 0.02rem;
+        transform: scale(0.8);
+        transform-origin: left top;
+    }
+
+    body > div:first-of-type {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        min-height: 0;
+        padding-right: 0;
+        margin: 0;
+    }
+
+    body > div:first-of-type > div {
+        width: 100%;
+        margin-bottom: 2.2rem;
+    }
+
+    b {
+        margin-bottom: 0.55rem;
+        font-size: var(--font-size-label);
+    }
+
+    .select-wrapper,
+    .selects .select-wrapper,
+    .selects .select-wrapper:first-child,
+    .selects .select-wrapper:last-child {
+        width: 100%;
+        max-width: none;
+    }
+
+    .select-wrapper select {
+        width: 100%;
+        height: 34px;
+        font-size: 0.78rem;
+    }
+
+    .selects {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+    }
+
+    body::after {
+        right: 1.25rem;
+        bottom: 1.25rem;
+        width: calc(100% - 2.5rem);
+        min-height: 58px;
+        border-radius: 14px;
+        font-size: var(--font-size-button);
+    }
+}
+
+/* ============================================================
+   14. AJUSTES PARA TELAS MUITO PEQUENAS
+   ============================================================ */
+
+@media (max-width: 350px) {
+    body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1 {
+        padding-left: 1.3rem;
+        padding-right: 1.3rem;
+    }
+
+    h1::before {
+        left: -0.1rem;
+    }
+
+    body::after {
+        right: 1rem;
+        width: calc(100% - 2rem);
+    }
+}

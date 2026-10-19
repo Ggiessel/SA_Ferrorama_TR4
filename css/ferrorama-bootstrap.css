@@ -1,0 +1,1607 @@
+/*
+============================================================
+  FERRORAMA TR4 — TEMA GLOBAL (Bootstrap 5.3)
+  Arquivo: css/ferrorama-bootstrap.css
+============================================================
+
+  Como usar (no <head> de cada página, NESTA ordem):
+    1. Bootstrap 5.3 (CDN)
+    2. Bootstrap Icons (CDN)
+    3. Fonte Inter (Google Fonts)
+    4. ../css/ferrorama-bootstrap.css   <- este arquivo
+
+  Cada <body> recebe uma classe "pg-..." que identifica a
+  página. Assim classes repetidas entre páginas (.card, .logo,
+  .header...) não brigam entre si.
+
+  Breakpoints usados = os mesmos do Bootstrap:
+    sm 576px | md 768px | lg 992px | xl 1200px
+*/
+
+/* ============================================================
+   1. VARIÁVEIS — sobrescrevem as do Bootstrap
+   ============================================================ */
+
+:root {
+    /* Paleta do projeto (mesma do mockup) */
+    --fr-azul-fundo: #d1ddf5;
+    --fr-azul-card: #dce6fb;
+    --fr-azul-escuro: #152c59;
+    --fr-primaria: #06648c;
+    --fr-primaria-hover: #055775;
+    --fr-branco: #ffffff;
+    --fr-cinza-texto: #5b6478;
+    --fr-borda: #b9c6e2;
+    --fr-perigo: #b3261e;
+    --fr-trilho: #4a5878;
+
+    /* Fonte sem serifa */
+    --fr-fonte: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    /* Bootstrap */
+    --bs-body-font-family: var(--fr-fonte);
+    --bs-body-bg: var(--fr-azul-fundo);
+    --bs-body-color: var(--fr-azul-escuro);
+    --bs-primary: var(--fr-primaria);
+    --bs-primary-rgb: 6, 100, 140;
+    --bs-link-color: var(--fr-primaria);
+    --bs-link-color-rgb: 6, 100, 140;
+    --bs-link-hover-color: var(--fr-primaria-hover);
+    --bs-border-radius: 0.5rem;
+    --bs-border-radius-lg: 0.85rem;
+    --bs-focus-ring-color: rgba(6, 100, 140, 0.3);
+
+    /* Espaçamento lateral que cresce com a tela */
+    --fr-respiro: clamp(1rem, 4vw, 3rem);
+    --fr-raio: 0.5rem;
+    --fr-raio-lg: 0.85rem;
+    --fr-sombra: 0 1px 3px rgba(21, 44, 89, 0.1);
+    --fr-altura-campo: 2.75rem;
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 2.5rem) var(--fr-respiro) 3rem;
+    font-family: var(--fr-fonte);
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: var(--fr-azul-fundo);
+    color: var(--fr-azul-escuro);
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--fr-fonte);
+    color: var(--fr-azul-escuro);
+}
+
+::selection {
+    background: rgba(6, 100, 140, 0.2);
+}
+
+/* Foco visível para quem navega pelo teclado */
+:where(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid var(--bs-focus-ring-color);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   3. TÍTULO DAS PÁGINAS + TRILHO
+   ------------------------------------------------------------
+   O ícone (bi-list / bi-arrow-left) fica à esquerda e o texto
+   centralizado. Embaixo, uma linha que imita um trilho com
+   dormentes: é a assinatura visual do projeto.
+   ============================================================ */
+
+body > h1,
+.header h1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    margin: 0 auto 2rem;
+    padding: 0 2.75rem 1rem;
+    max-width: 72rem;
+    font-size: clamp(1.25rem, 1rem + 1.2vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-align: center;
+    line-height: 1.2;
+}
+
+body > h1::after,
+.header h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    background:
+        linear-gradient(var(--fr-trilho), var(--fr-trilho)) top / 100% 2px no-repeat,
+        linear-gradient(var(--fr-trilho), var(--fr-trilho)) bottom / 100% 2px no-repeat,
+        repeating-linear-gradient(
+            90deg,
+            var(--fr-trilho) 0 3px,
+            transparent 3px 18px
+        );
+    opacity: 0.35;
+}
+
+body > h1 > i,
+.header h1 > i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--fr-raio);
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+body > h1 > i:hover,
+.header h1 > i:hover {
+    background-color: rgba(21, 44, 89, 0.08);
+}
+
+/* ============================================================
+   4. CAMPOS (input / select) — visual de form-control
+   ============================================================ */
+
+:where(input[type="text"], input[type="email"], input[type="search"],
+       input[type="password"], input[type="tel"], select, textarea) {
+    display: block;
+    width: 100%;
+    min-height: var(--fr-altura-campo);
+    padding: 0.5rem 0.9rem;
+    font-family: var(--fr-fonte);
+    font-size: 1rem;
+    color: var(--fr-azul-escuro);
+    background-color: var(--fr-branco);
+    border: 1px solid var(--fr-borda);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+:where(input, select, textarea)::placeholder {
+    color: #8a93a8;
+}
+
+:where(input, select, textarea):focus {
+    outline: none;
+    border-color: var(--fr-primaria);
+    box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+}
+
+/* Seta do select igual à do Bootstrap (.form-select) */
+:where(select) {
+    appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23152c59' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 14px 10px;
+}
+
+label,
+.field > p,
+.left-col > p {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+}
+
+/* ============================================================
+   5. BOTÕES — base compartilhada
+   ============================================================ */
+
+.btn-primario,
+.btn-adicionar,
+.btn-remover,
+.btn-salvar,
+.save-btn,
+.pdf-btn,
+.pesquisa button,
+.button button,
+.btnCliente button,
+.btnMaquinista button,
+.btnGestor button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: var(--fr-altura-campo);
+    padding: 0.5rem 1.4rem;
+    font-family: var(--fr-fonte);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    border-radius: var(--fr-raio);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+/* Primário (azul) */
+.btn-primario,
+.btn-adicionar,
+.btn-salvar,
+.save-btn,
+.pesquisa button,
+.button button:last-child {
+    background-color: var(--fr-primaria);
+    color: var(--fr-branco);
+}
+
+.btn-primario:hover,
+.btn-adicionar:hover,
+.btn-salvar:hover,
+.save-btn:hover,
+.pesquisa button:hover,
+.button button:last-child:hover {
+    background-color: var(--fr-primaria-hover);
+}
+
+/* Secundário (contorno) */
+.pdf-btn,
+.button button:first-child {
+    background-color: var(--fr-branco);
+    color: var(--fr-azul-escuro);
+    border-color: var(--fr-borda);
+}
+
+.pdf-btn:hover,
+.button button:first-child:hover {
+    border-color: var(--fr-azul-escuro);
+}
+
+/* Perigo (remover / descartar) */
+.btn-remover {
+    background-color: var(--fr-perigo);
+    color: var(--fr-branco);
+}
+
+.btn-remover:hover {
+    background-color: #8f1e18;
+}
+
+.button button:first-child {
+    color: var(--fr-perigo);
+}
+
+/* ============================================================
+   6. BARRA DE PESQUISA (menus e alertas)
+   ============================================================ */
+
+#searchBar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.inputSearch {
+    position: relative;
+    width: 100%;
+    max-width: 44rem;
+}
+
+.inputSearch .input-field {
+    padding-left: 2.75rem;
+    border-radius: 999px;
+}
+
+.iconPesquisa {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--fr-cinza-texto);
+    pointer-events: none;
+}
+
+/* ============================================================
+   7. LOGIN e SIGN-IN
+   ============================================================ */
+
+.pg-login .page,
+.pg-signin .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 4rem);
+}
+
+.pg-login .logo,
+.pg-signin .logo {
+    margin: clamp(1rem, 5vh, 4rem) 0 clamp(1.5rem, 5vh, 3.5rem);
+}
+
+.pg-login .logo img,
+.pg-signin .logo img {
+    display: block;
+    width: clamp(180px, 45vw, 320px);
+}
+
+/* Bootstrap já define .card — aqui deixamos ele "transparente" */
+.pg-login .card,
+.pg-signin .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 26rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    align-items: stretch;
+    text-align: center;
+}
+
+.pg-login .card h1,
+.pg-signin .card h1 {
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+.pg-login .card > p:not(.termos),
+.pg-signin .card > p:not(.termos) {
+    margin-bottom: 1.25rem;
+    color: var(--fr-cinza-texto);
+    font-size: 0.95rem;
+}
+
+.pg-login .card input,
+.pg-signin .card input {
+    margin-bottom: 0.75rem;
+}
+
+.pg-login .btn-primario,
+.pg-signin .btn-primario {
+    width: 100%;
+}
+
+.separador {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+    color: var(--fr-cinza-texto);
+    font-size: 0.875rem;
+}
+
+.separador::before,
+.separador::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--fr-borda);
+}
+
+.btn-continuar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    min-height: var(--fr-altura-campo);
+    margin-bottom: 0.6rem;
+    font-family: var(--fr-fonte);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--fr-azul-escuro);
+    background-color: var(--fr-branco);
+    border: 1px solid var(--fr-borda);
+    border-radius: var(--fr-raio);
+    cursor: pointer;
+}
+
+.btn-continuar:hover {
+    border-color: var(--fr-azul-escuro);
+}
+
+.btn-continuar p {
+    margin: 0;
+}
+
+.btn-continuar i {
+    font-size: 1.1rem;
+}
+
+.termos {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--fr-cinza-texto);
+    line-height: 1.5;
+}
+
+.rodape {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--fr-cinza-texto);
+}
+
+.rodape a {
+    color: var(--fr-primaria);
+    font-weight: 600;
+}
+
+/* ============================================================
+   8. MENUS (gestor, maquinista, cliente) e grade de botões
+   ============================================================ */
+
+/* Barra lateral: no celular vira uma faixa no topo */
+.sidebar {
+    margin: calc(-1 * clamp(1.25rem, 3vw, 2.5rem)) calc(-1 * var(--fr-respiro)) 1.5rem;
+    padding: 0.5rem var(--fr-respiro);
+    background-color: var(--fr-azul-escuro);
+}
+
+.sidebar ul {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    color: #d6def0;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: var(--fr-raio);
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--fr-branco);
+}
+
+.sidebar .logo a {
+    color: var(--fr-branco);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.sidebar .iconSidebar:empty {
+    display: none;
+}
+
+/* No celular a faixa do menu vem antes da busca */
+.pg-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.pg-menu .sidebar {
+    order: -1;
+}
+
+/* A grade de botões */
+.pg-menu .card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+/* As <div> que agrupam os botões "somem" e os botões
+   entram direto na grade */
+.pg-menu .card > div {
+    display: contents;
+}
+
+.botao-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.5rem;
+    padding: 1rem 1.25rem;
+    font-family: var(--fr-fonte);
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    font-weight: 600;
+    text-align: center;
+    color: var(--fr-azul-escuro);
+    background-color: var(--fr-branco);
+    border: 1px solid var(--fr-borda);
+    border-left: 5px solid var(--fr-primaria);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.botao-menu:hover {
+    background-color: #f5f8ff;
+    border-color: var(--fr-primaria);
+}
+
+@media (min-width: 576px) {
+    .pg-menu .card {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .botao-menu {
+        min-height: 7rem;
+    }
+}
+
+/* Telas grandes: barra lateral fixa à esquerda */
+@media (min-width: 992px) {
+    .pg-menu {
+        padding-left: calc(14rem + var(--fr-respiro));
+    }
+
+    .pg-menu .sidebar {
+        order: 0;
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 14rem;
+        margin: 0;
+        padding: 1.5rem 0.75rem;
+        overflow-y: auto;
+    }
+
+    .pg-menu .sidebar ul {
+        flex-direction: column;
+        overflow: visible;
+    }
+
+    .pg-menu .sidebar .logo {
+        margin-bottom: 1rem;
+    }
+
+    .pg-menu .sidebar .logo a {
+        font-size: 1.5rem;
+    }
+
+    .botao-menu {
+        min-height: 8rem;
+    }
+}
+
+/* ============================================================
+   9. SELEÇÃO DE USUÁRIO
+   ============================================================ */
+
+.pg-selecao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.pg-selecao .logo img {
+    width: clamp(180px, 45vw, 320px);
+    margin: clamp(1rem, 5vh, 3rem) 0 2rem;
+}
+
+.pg-selecao h2 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.1rem, 1rem + 0.6vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.btnCliente,
+.btnMaquinista,
+.btnGestor {
+    width: 100%;
+    max-width: 22rem;
+    margin-bottom: 0.9rem;
+}
+
+.btnCliente button,
+.btnMaquinista button,
+.btnGestor button {
+    width: 100%;
+    min-height: 3.5rem;
+    font-size: 1.1rem;
+    background-color: var(--fr-branco);
+    color: var(--fr-azul-escuro);
+    border-color: var(--fr-borda);
+}
+
+.btnCliente button:hover,
+.btnMaquinista button:hover,
+.btnGestor button:hover {
+    background-color: var(--fr-primaria);
+    border-color: var(--fr-primaria);
+    color: var(--fr-branco);
+}
+
+/* ============================================================
+   10. ALERTAS E NOTIFICAÇÕES
+   ============================================================ */
+
+.listaAlertas {
+    display: grid;
+    gap: 1rem;
+    max-width: 44rem;
+    margin: 0 auto;
+}
+
+.cardAlerta {
+    padding: 1.1rem 1.25rem;
+    background-color: var(--fr-azul-card);
+    border-left: 5px solid var(--fr-primaria);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+}
+
+.cardAlerta p {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ============================================================
+   11. GESTÃO DE ROTAS
+   ============================================================ */
+
+.pg-rotas .card {
+    max-width: 60rem;
+    margin: 0 auto;
+    background: transparent;
+    border: 0;
+}
+
+.rotas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    max-width: 60rem;
+    margin: 0 auto 1.25rem;
+}
+
+.rotas h2,
+.painel-card h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.rotas select {
+    width: auto;
+    min-width: 10rem;
+}
+
+.grid-horarios-leitura {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-horario-div {
+    padding: 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+}
+
+.secao-paineis-informativos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.painel-card {
+    padding: 1.25rem;
+    background-color: var(--fr-azul-card);
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.painel-card h2 {
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.divisor-tracejado {
+    margin-bottom: 1rem;
+    border-top: 2px dashed var(--fr-borda);
+}
+
+.status-linhas-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.bloco-linha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.label-linha {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.badge-status-leitura {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: var(--fr-branco);
+    border-radius: 999px;
+}
+
+.caixa-mensagem-alerta {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.9rem;
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio);
+}
+
+.caixa-mensagem-alerta p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+    .grid-horarios-leitura {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .secao-paineis-informativos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================================
+   12. GESTÃO GERAL (Dashboard)
+   ============================================================ */
+
+.mapa {
+    max-width: 72rem;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.mapa img {
+    display: block;
+    width: 100%;
+    max-height: 26rem;
+    object-fit: cover;
+}
+
+.pg-geral .alertas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 72rem;
+    margin: 0 auto;
+}
+
+.card-metrica-painel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.legenda-grafico-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.item-legenda {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.quadrado-cor {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 3px;
+}
+
+.cor-em-rota {
+    background-color: var(--fr-primaria);
+}
+
+.cor-disponivel {
+    background-color: #8fb3e8;
+}
+
+.imagem-grafico-box img {
+    display: block;
+    margin: 0 auto;
+}
+
+.dados-texto-wrapper {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.texto-metrica-capital {
+    margin: 0;
+    padding: 0.75rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    background-color: var(--fr-azul-card);
+    border-radius: var(--fr-raio);
+}
+
+@media (min-width: 768px) {
+    .pg-geral .alertas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .pg-geral .alertas {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ============================================================
+   13. FORMULÁRIOS EM CARD
+   (adicionar/remover/gestão de sensores, manutenção,
+    monitoramento)
+   ============================================================ */
+
+.tela-label:empty {
+    display: none;
+}
+
+.pg-form .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    gap: 1.25rem;
+    background-color: var(--fr-branco);
+    border: 0;
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+/* O ícone bi-list já faz o papel do "hambúrguer" */
+.menu-icon {
+    display: none;
+}
+
+.pg-form .header h1 {
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.15rem, 1rem + 0.8vw, 1.5rem);
+}
+
+.field,
+.content {
+    width: 100%;
+}
+
+.info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+    background-color: var(--fr-azul-card);
+    border-radius: var(--fr-raio);
+}
+
+.info-box .icon {
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: var(--fr-primaria);
+}
+
+.info-box p {
+    margin: 0;
+}
+
+.btn-adicionar,
+.btn-remover {
+    width: 100%;
+}
+
+.right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.right-col > div,
+.right-col button {
+    width: 100%;
+}
+
+.Imagem img {
+    display: block;
+    width: 100%;
+    border-radius: var(--fr-raio);
+}
+
+@media (min-width: 576px) {
+    .right-col {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .right-col > div,
+    .right-col button {
+        width: auto;
+    }
+
+    .btn-adicionar,
+    .btn-remover {
+        width: auto;
+        align-self: flex-end;
+    }
+}
+
+/* ============================================================
+   14. CADASTRO DE CARGAS
+   ============================================================ */
+
+.pg-carga .formulario {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.pg-carga .formulario > div {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.pg-carga b {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+}
+
+.selects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.pg-carga .btn-salvar {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .selects {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pg-carga .btn-salvar {
+        width: auto;
+        justify-self: end;
+        min-width: 10rem;
+    }
+}
+
+/* ============================================================
+   15. GESTÃO DE FUNCIONÁRIOS
+   ============================================================ */
+
+.pesquisa {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 44rem;
+    margin: 0 auto 1.5rem;
+}
+
+.pg-funcionarios .funcionarios {
+    max-width: 44rem;
+    margin: 0 auto 0.5rem;
+    padding: 0.9rem 1.1rem;
+    font-weight: 500;
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+    cursor: pointer;
+}
+
+.pg-funcionarios .funcionarios:hover {
+    background-color: #f5f8ff;
+}
+
+@media (min-width: 576px) {
+    .pesquisa {
+        flex-direction: row;
+    }
+
+    .pesquisa input {
+        flex: 1;
+    }
+}
+
+/* ============================================================
+   16. PERFIS (funcionário e pessoal)
+   ============================================================ */
+
+.perfil-funcionario,
+.dados-pessoais {
+    display: grid;
+    gap: 1rem;
+    max-width: 44rem;
+    margin: 0 auto 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.perfil-funcionario > b,
+.dados-pessoais h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.dados-pessoais label {
+    margin: 0.25rem 0 -0.6rem;
+}
+
+.nome-funcionario {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.button {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+    max-width: 44rem;
+    margin: 0 auto;
+}
+
+.button button {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .nome-funcionario {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .button {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .button button {
+        width: auto;
+        min-width: 9rem;
+    }
+}
+
+/* ============================================================
+   17. ACESSIBILIDADE — menos movimento
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ============================================================
+   18. ELEMENTOS CRIADOS PELO JAVASCRIPT
+   ============================================================ */
+
+/* Garante que hidden esconda mesmo com display:flex nas classes */
+[hidden] {
+    display: none !important;
+}
+
+/* Ícones clicáveis do título (☰ e ←) */
+h1 > i[role="button"]:focus-visible {
+    outline: 3px solid var(--bs-focus-ring-color);
+    outline-offset: 2px;
+}
+
+/* ---------- Avisos flutuantes (TR4.avisar) ---------- */
+.tr4-avisos {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1080;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.tr4-aviso {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 26rem;
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+    color: var(--fr-branco);
+    background-color: var(--fr-azul-escuro);
+    border-left: 5px solid #8fb3e8;
+    border-radius: var(--fr-raio);
+    box-shadow: 0 6px 20px rgba(21, 44, 89, 0.25);
+    pointer-events: auto;
+    animation: tr4-entrar 0.2s ease-out;
+}
+
+.tr4-aviso span {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.tr4-aviso button {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: var(--fr-raio);
+    cursor: pointer;
+}
+
+.tr4-aviso button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.tr4-aviso--sucesso { border-left-color: #5cc48a; }
+.tr4-aviso--erro    { border-left-color: #ff8a80; }
+.tr4-aviso--aviso   { border-left-color: #ffd166; }
+
+@keyframes tr4-entrar {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (min-width: 576px) {
+    .tr4-avisos {
+        left: auto;
+        align-items: flex-end;
+    }
+}
+
+/* ---------- Erros nos campos (TR4.erro) ---------- */
+[aria-invalid="true"] {
+    border-color: var(--fr-perigo) !important;
+}
+
+[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 0.25rem rgba(179, 38, 30, 0.2) !important;
+}
+
+.tr4-erro-texto {
+    margin: 0.35rem 0 0.25rem;
+    color: var(--fr-perigo);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+input[readonly] {
+    color: var(--fr-cinza-texto);
+    background-color: #eef2fa;
+    cursor: default;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ---------- Textos de apoio ---------- */
+.saudacao {
+    max-width: 52rem;
+    margin: 0 auto 1rem;
+    color: var(--fr-cinza-texto);
+    font-weight: 500;
+}
+
+.estado-vazio {
+    max-width: 44rem;
+    margin: 1rem auto;
+    padding: 1.25rem;
+    color: var(--fr-cinza-texto);
+    text-align: center;
+    list-style: none;
+    border: 2px dashed var(--fr-borda);
+    border-radius: var(--fr-raio);
+}
+
+.titulo-secao {
+    margin: 0.5rem 0 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.item-detalhe {
+    display: block;
+    color: var(--fr-cinza-texto);
+    font-size: 0.875rem;
+}
+
+/* ---------- Login / Cadastro ---------- */
+.pg-signin .descricao {
+    margin-bottom: 1.25rem;
+    color: var(--fr-cinza-texto);
+    font-size: 0.95rem;
+}
+
+.input-email {
+    position: relative;
+}
+
+.input-email input {
+    padding-right: 2.75rem;
+}
+
+.google-icon {
+    position: absolute;
+    top: calc(var(--fr-altura-campo) / 2);
+    right: 1rem;
+    transform: translateY(-50%);
+    color: #4285f4;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.pg-signin .rodape a {
+    color: var(--fr-primaria);
+    font-weight: 600;
+}
+
+/* Cargo escolhido na seleção de usuário */
+.pg-selecao button[aria-pressed="true"] {
+    border-color: var(--fr-primaria);
+    box-shadow: inset 0 0 0 1px var(--fr-primaria);
+}
+
+/* ---------- Alertas ---------- */
+.cardAlerta {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    text-align: left;
+}
+
+.icone-alerta {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: var(--fr-primaria);
+}
+
+.texto-alerta {
+    flex: 1;
+}
+
+.texto-alerta time {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--fr-cinza-texto);
+    font-size: 0.8rem;
+}
+
+.cardAlerta--aviso  { border-left-color: #e0a800; }
+.cardAlerta--aviso .icone-alerta  { color: #b58300; }
+.cardAlerta--atraso { border-left-color: var(--fr-perigo); }
+.cardAlerta--atraso .icone-alerta { color: var(--fr-perigo); }
+
+.btn-apagar {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    color: var(--fr-cinza-texto);
+    background: transparent;
+    border: 0;
+    border-radius: var(--fr-raio);
+    cursor: pointer;
+}
+
+.btn-apagar:hover {
+    color: var(--fr-perigo);
+    background-color: rgba(179, 38, 30, 0.08);
+}
+
+/* ---------- Status das linhas (gestão de rotas) ---------- */
+.badge-status-leitura.status-ja-partiu { color: #1e7a4a; }
+.badge-status-leitura.status-atrasado  { color: var(--fr-perigo); }
+
+/* ---------- Listas (sensores, cargas) ---------- */
+.lista-itens {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item-lista {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.85rem 1rem;
+    background-color: var(--fr-azul-card);
+    border-radius: var(--fr-raio);
+}
+
+.item-carga {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.item-carga-topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+}
+
+/* Selos de status */
+.selo {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 999px;
+    background-color: var(--fr-branco);
+}
+
+.selo--ativo,
+.selo--entregue    { color: #1e7a4a; }
+.selo--instalacao,
+.selo--em-transito { color: var(--fr-primaria); }
+.selo--remocao     { color: var(--fr-perigo); }
+.selo--aguardando  { color: #8a6100; }
+
+/* Barra de progresso da viagem */
+.barra-progresso {
+    height: 0.6rem;
+    overflow: hidden;
+    background-color: var(--fr-branco);
+    border-radius: 999px;
+}
+
+.barra-progresso span {
+    display: block;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--fr-primaria) 0 14px,
+        #0a7cad 14px 18px
+    );
+    border-radius: inherit;
+    transition: width 0.6s ease;
+}
+
+/* Filtro por status (monitoramento) */
+.filtro-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filtro-status button {
+    min-height: 2.25rem;
+    padding: 0.3rem 0.9rem;
+    font-family: var(--fr-fonte);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fr-azul-escuro);
+    background-color: var(--fr-branco);
+    border: 1px solid var(--fr-borda);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.filtro-status button[aria-pressed="true"] {
+    color: var(--fr-branco);
+    background-color: var(--fr-primaria);
+    border-color: var(--fr-primaria);
+}
+
+/* ---------- Funcionários (agora são links) ---------- */
+.pg-funcionarios a.funcionarios {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    color: var(--fr-azul-escuro);
+    text-decoration: none;
+}
+
+.pg-funcionarios a.funcionarios .item-detalhe {
+    display: inline;
+}
+
+/* ---------- Relatórios ---------- */
+.resumo-relatorio {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    max-width: 60rem;
+    margin: 0 auto 1.5rem;
+}
+
+.item-resumo {
+    padding: 1rem;
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio);
+    box-shadow: var(--fr-sombra);
+}
+
+.item-resumo strong {
+    display: block;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.item-resumo span {
+    color: var(--fr-cinza-texto);
+    font-size: 0.875rem;
+}
+
+.bloco-relatorio {
+    max-width: 60rem;
+    margin: 0 auto 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    background-color: var(--fr-branco);
+    border-radius: var(--fr-raio-lg);
+    box-shadow: var(--fr-sombra);
+}
+
+.bloco-relatorio h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Reforço: a tabela rola de lado no celular mesmo se o Bootstrap não carregar */
+.bloco-relatorio .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.bloco-relatorio .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.925rem;
+}
+
+.bloco-relatorio th {
+    color: var(--fr-cinza-texto);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.bloco-relatorio td.estado-vazio {
+    border: 0;
+}
+
+.pg-relatorios .button {
+    max-width: 60rem;
+}
+
+@media (min-width: 768px) {
+    .resumo-relatorio {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* ============================================================
+   19. IMPRESSÃO ("Salvar como PDF")
+   ============================================================ */
+
+@media print {
+    body {
+        padding: 0;
+        background: #fff;
+    }
+
+    .sidebar,
+    #searchBar,
+    .right-col,
+    .button,
+    .tr4-avisos,
+    h1 > i {
+        display: none !important;
+    }
+
+    .pg-form .card,
+    .bloco-relatorio,
+    .item-resumo {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    body > h1::after,
+    .header h1::after {
+        display: none;
+    }
+}

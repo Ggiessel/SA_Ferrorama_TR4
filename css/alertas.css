@@ -1,0 +1,101 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #e6e6e6;
+    color: #2b2b2b;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    position: relative;
+    color: #2b3a55;
+}
+
+h1 i {
+    position: absolute;
+    left: 0;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Barra de busca */
+#searchBar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.inputSearch {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 8px 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.iconPesquisa {
+    color: #999;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.input-field {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 13px;
+    background: transparent;
+}
+
+/* Lista de alertas */
+.listaAlertas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.cardAlerta {
+    width: 100%;
+    background-color: #dce6fb;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.cardAlerta p {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2b4a8c;
+}
+
+.emoji-alerta {
+    font-size: 16px;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .listaAlertas {
+        max-width: 100%;
+    }
+}
