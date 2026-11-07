@@ -21,8 +21,8 @@ if (consultar("SELECT id FROM usuarios WHERE email = ?", [$email])) {
 }
 
 executar(
-    "INSERT INTO usuarios (nome, email, senha, ativo_desde) VALUES (?, ?, ?, ?)",
-    [$nome, $email, password_hash($senha, PASSWORD_DEFAULT), hoje()]
+    "INSERT INTO usuarios (nome, email, senha, cargo, ativo_desde) VALUES (?, ?, ?, ?, ?)",
+    [$nome, $email, password_hash($senha, PASSWORD_DEFAULT), "cliente", hoje()]
 );
 
 $usuario = consultar("SELECT id, nome, email, cargo, nascimento, ativo_desde, telefone FROM usuarios WHERE email = ?", [$email])[0];

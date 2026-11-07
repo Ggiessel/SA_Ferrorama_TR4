@@ -19,7 +19,7 @@ try {
 }
 
 set_exception_handler(function ($e) {
-    erro("Erro no servidor: " . $e->getMessage(), null, 500);
+    erro("Não foi possível concluir a operação. Tente novamente.", null, 500);
 });
 
 function responder($dados, $status = 200)

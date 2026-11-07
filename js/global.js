@@ -7,7 +7,6 @@ const MENUS = {
 };
 
 const PERMISSOES = {
-    "selecao-usuario": "logado",
     "menu-gestor": ["gestor"],
     "menu-maquinista": ["maquinista"],
     "menu.cliente": ["cliente"],
@@ -24,6 +23,12 @@ const PERMISSOES = {
     "remover-sensor": ["gestor"],
     "funcionarios": ["gestor"],
     "perfil-funcionario": ["gestor"]
+};
+
+const NOMES_CARGO = {
+    gestor: "Gestor",
+    maquinista: "Maquinista",
+    cliente: "Cliente"
 };
 
 const NOMES_STATUS = {
@@ -83,16 +88,12 @@ function iniciarPagina(funcao) {
             if (permitidos) {
                 usuarioAtual = await api("usuario.php");
 
-                if (permitidos !== "logado") {
-                    if (!usuarioAtual.cargo) {
-                        location.href = "selecao-usuario.html";
-                        return;
-                    }
-                    if (!permitidos.includes(usuarioAtual.cargo)) {
-                        irParaMenu();
-                        return;
-                    }
+                if (!permitidos.includes(usuarioAtual.cargo)) {
+                    irParaMenu();
+                    return;
                 }
+
+                mostrarConectado();
             }
 
             configurarNavegacao();
@@ -104,8 +105,23 @@ function iniciarPagina(funcao) {
 }
 
 function irParaMenu(usuario = usuarioAtual) {
-    location.href = usuario && usuario.cargo ? MENUS[usuario.cargo] : "selecao-usuario.html";
+    location.href = usuario && MENUS[usuario.cargo] ? MENUS[usuario.cargo] : "login.html";
 }
+
+function mostrarConectado() {
+    const linha = document.createElement("p");
+    const nome = document.createElement("strong");
+    linha.className = "conectado";
+    nome.textContent = usuarioAtual.nome;
+    linha.append("Conectado como ", nome, " (" + NOMES_CARGO[usuarioAtual.cargo] + ")");
+    document.body.prepend(linha);
+}
+
+window.addEventListener("pageshow", (evento) => {
+    if (evento.persisted) {
+        location.reload();
+    }
+});
 
 function configurarNavegacao() {
     document.querySelectorAll("h1 > .bi-list").forEach((icone) => {

@@ -23,6 +23,9 @@ iniciarPagina(async (usuario) => {
 
         lista.querySelectorAll(".btn-apagar").forEach((botao) => {
             botao.addEventListener("click", async () => {
+                if (!confirm("Apagar este alerta?")) {
+                    return;
+                }
                 await api("alertas.php?id=" + botao.dataset.id, "DELETE");
                 await carregar();
             });

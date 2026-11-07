@@ -4,12 +4,12 @@ iniciarPagina(() => {
         limparErros();
 
         try {
-            await api("cadastro.php", "POST", {
+            const usuario = await api("cadastro.php", "POST", {
                 nome: valor("nomeCadastro"),
                 email: valor("emailCadastro"),
                 senha: valor("senhaCadastro")
             });
-            location.href = "selecao-usuario.html";
+            irParaMenu(usuario);
         } catch (erro) {
             mostrarErro(erro);
         }

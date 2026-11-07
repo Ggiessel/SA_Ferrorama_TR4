@@ -1,6 +1,6 @@
-iniciarPagina((usuario) => {
+iniciarPagina(() => {
     const paginas = {
-        "Gestão de Geral": "gestao-geral.html",
+        "Gestão Geral": "gestao-geral.html",
         "Gestão de Rotas": "gestao-rotas.html",
         "Monitoramento de Cargas": "monitoramento.html",
         "Manutenção": "manutencao.html",
@@ -17,11 +17,6 @@ iniciarPagina((usuario) => {
             location.href = paginas[botao.textContent.trim()];
         });
     });
-
-    document.querySelector(".conteudo").insertAdjacentHTML(
-        "beforebegin",
-        `<p class="saudacao">Olá, ${escapar(usuario.nome)}! O que você quer acompanhar hoje?</p>`
-    );
 
     document.getElementById("search").addEventListener("input", (evento) => {
         const termo = evento.target.value.toLowerCase();

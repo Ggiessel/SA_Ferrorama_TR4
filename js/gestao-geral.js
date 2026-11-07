@@ -12,13 +12,14 @@ iniciarPagina(async () => {
     const legendas = paineis[0].querySelectorAll(".texto-legenda");
     legendas[0].textContent = `Em rota (${emRota})`;
     legendas[1].textContent = `Disponíveis (${disponiveis})`;
+    legendas[2].textContent = `Em manutenção (${emManutencao})`;
 
     const caixaGrafico = paineis[0].querySelector(".imagem-grafico-box");
     caixaGrafico.innerHTML = '<canvas width="200" height="200"></canvas>';
     const desenho = caixaGrafico.querySelector("canvas").getContext("2d");
 
     let inicio = 0;
-    [[emRota, "#06648c"], [disponiveis, "#8fb3e8"], [emManutencao, "#c9d2e3"]].forEach(([quantidade, cor]) => {
+    [[emRota, "#2e9d5b"], [disponiveis, "#9fd3b2"], [emManutencao, "#e0a800"]].forEach(([quantidade, cor]) => {
         const fim = inicio + (quantidade / trens.length) * 2 * Math.PI;
         desenho.beginPath();
         desenho.moveTo(100, 100);

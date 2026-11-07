@@ -9,7 +9,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    cargo ENUM('gestor', 'maquinista', 'cliente') NULL,
+    cargo ENUM('gestor', 'maquinista', 'cliente') NOT NULL DEFAULT 'cliente',
     nascimento DATE NULL,
     ativo_desde DATE NOT NULL,
     telefone VARCHAR(20) NULL

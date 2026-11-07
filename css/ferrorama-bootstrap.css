@@ -1,31 +1,22 @@
-/* =====================================================================
-   FERRORAMA TR4 - tema visual de todas as páginas
-   Referência: mockups do Figma + devolutiva do professor
-   (azul da marca só em identidade; fundo neutro nas telas)
-   ===================================================================== */
-
-/* ---------- 1. Variáveis (paleta, fonte, medidas) ---------- */
 :root {
-    /* fundo neutro (correção do professor) */
+
     --fr-fundo: #e7e7ea;
     --fr-branco: #ffffff;
 
-    /* azuis da identidade TR4 */
-    --fr-azul-escuro: #152c59;      /* textos e títulos */
-    --fr-primaria: #06648c;         /* botões principais */
+    --fr-azul-escuro: #152c59;
+    --fr-primaria: #06648c;
     --fr-primaria-hover: #055775;
-    --fr-azul-claro: #d1ddf5;       /* painéis informativos */
-    --fr-azul-suave: #dce3f3;       /* cartões de horário */
-    --fr-azul-moldura: #c5d0ec;     /* moldura dos alertas / botões de sensor */
-    --fr-azul-icone: #7b9be8;       /* ícone ativo da sidebar */
+    --fr-azul-claro: #d1ddf5;
+    --fr-azul-suave: #dce3f3;
+    --fr-azul-moldura: #c5d0ec;
+    --fr-azul-icone: #7b9be8;
 
-    /* neutros */
     --fr-cinza-texto: #5b6478;
     --fr-cinza-icone: #7a7a7a;
     --fr-cinza-botao: #ececec;
     --fr-linha: #e2e5ec;
-    --fr-borda: #b9c6e2;            /* borda de campos */
-    --fr-borda-card: #5d6370;       /* borda fina dos cards do mockup */
+    --fr-borda: #b9c6e2;
+    --fr-borda-card: #5d6370;
     --fr-perigo: #b3261e;
 
     --fr-fonte: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -34,14 +25,13 @@
     --fr-raio: 0.5rem;
     --fr-raio-lg: 0.85rem;
     --fr-sombra: 0 1px 3px rgba(21, 44, 89, 0.1);
-    --fr-sombra-media: 0 4px 12px rgba(21, 44, 89, 0.12);   /* elemento em destaque */
-    --fr-sombra-forte: 0 10px 24px rgba(21, 44, 89, 0.16);  /* card "levantado" no hover */
-    --fr-transicao: 0.2s ease;                              /* velocidade padrão dos efeitos */
+    --fr-sombra-media: 0 4px 12px rgba(21, 44, 89, 0.12);
+    --fr-sombra-forte: 0 10px 24px rgba(21, 44, 89, 0.16);
+    --fr-transicao: 0.2s ease;
     --fr-altura-campo: 2.75rem;
     --fr-respiro: clamp(1rem, 4vw, 3rem);
-    --fr-largura: 64rem;            /* largura máxima do conteúdo */
+    --fr-largura: 64rem;
 
-    /* integra o tema com as variáveis do Bootstrap */
     --bs-body-font-family: var(--fr-fonte);
     --bs-body-bg: var(--fr-fundo);
     --bs-body-color: var(--fr-azul-escuro);
@@ -54,7 +44,6 @@
     --bs-focus-ring-color: rgba(6, 100, 140, 0.3);
 }
 
-/* ---------- 2. Base ---------- */
 *,
 *::before,
 *::after {
@@ -65,7 +54,6 @@ html {
     scroll-behavior: smooth;
 }
 
-/* transição suave ao trocar de página (Chrome/Edge; outros navegadores ignoram) */
 @media (prefers-reduced-motion: no-preference) {
     @view-transition {
         navigation: auto;
@@ -105,7 +93,6 @@ h3 {
     display: none !important;
 }
 
-/* o conteúdo principal "surge" de leve quando a página abre */
 @keyframes surgir {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: none; }
@@ -114,8 +101,6 @@ h3 {
 body > h1,
 .conteudo,
 .page,
-.topo-selecao,
-.lista-cargos,
 .listaAlertas,
 .lista-funcionarios,
 .mapa,
@@ -130,7 +115,6 @@ a {
     transition: color var(--fr-transicao);
 }
 
-/* Logo só do trem (recorta a parte esquerda da logo completa) */
 .logo-trem {
     display: block;
     width: 4rem;
@@ -139,7 +123,18 @@ a {
     object-position: left center;
 }
 
-/* ---------- 3. Título das páginas (ícone ☰ à esquerda + título centralizado) ---------- */
+.conectado {
+    max-width: var(--fr-largura);
+    margin: -0.75rem auto 1rem;
+    font-size: 0.875rem;
+    text-align: right;
+    color: var(--fr-cinza-texto);
+}
+
+.conectado strong {
+    color: var(--fr-azul-escuro);
+}
+
 body > h1 {
     position: relative;
     display: flex;
@@ -176,7 +171,6 @@ body > h1 > i:hover {
     background-color: rgba(6, 100, 140, 0.1);
 }
 
-/* ---------- 4. Campos de formulário ---------- */
 :where(input[type="text"], input[type="email"], input[type="search"],
        input[type="password"], input[type="tel"], input[type="date"],
        select, textarea) {
@@ -240,7 +234,6 @@ input[readonly] {
     text-align: left;
 }
 
-/* ---------- 5. Botões (um padrão só para o sistema todo) ---------- */
 .btn-primario,
 .btn-secundario {
     display: inline-flex;
@@ -260,7 +253,6 @@ input[readonly] {
         box-shadow var(--fr-transicao), transform var(--fr-transicao);
 }
 
-/* efeito padrão: o botão sobe um pouquinho no hover e "afunda" ao clicar */
 .btn-primario:hover,
 .btn-secundario:hover {
     transform: translateY(-2px);
@@ -293,7 +285,6 @@ input[readonly] {
     border-color: var(--fr-azul-escuro);
 }
 
-/* botão grande de ação (Salvar, Enviar, Adicionar...) como nos mockups */
 .btn-grande {
     min-width: 16rem;
     min-height: 4rem;
@@ -310,7 +301,6 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-/* área de botões no fim das páginas */
 .acoes {
     display: flex;
     flex-wrap: wrap;
@@ -319,7 +309,6 @@ button:disabled:hover {
     margin-top: 2rem;
 }
 
-/* ---------- 6. Barra de pesquisa (menus, alertas, funcionários) ---------- */
 #searchBar {
     display: flex;
     justify-content: center;
@@ -370,7 +359,6 @@ button.iconPesquisa:hover {
     background-color: rgba(21, 44, 89, 0.08);
 }
 
-/* ---------- 7. Login e cadastro ---------- */
 .pg-login .page,
 .pg-signin .page {
     display: flex;
@@ -445,7 +433,6 @@ button.iconPesquisa:hover {
     background-color: #c4cbd8;
 }
 
-/* botões "Continuar com Google / Apple" (cinza claro no mockup) */
 .btn-continuar {
     display: flex;
     align-items: center;
@@ -468,10 +455,6 @@ button.iconPesquisa:hover {
 .btn-continuar:hover {
     background-color: #e2e4e9;
     border-color: #c4cbd8;
-}
-
-.btn-continuar p {
-    margin: 0;
 }
 
 .termos {
@@ -515,63 +498,6 @@ button.iconPesquisa:hover {
     pointer-events: none;
 }
 
-/* ---------- 8. Seleção de cargo ---------- */
-.topo-selecao {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    max-width: var(--fr-largura);
-    margin: 0 auto 2.5rem;
-}
-
-.titulo-pilula {
-    margin: 0;
-    padding: 1.25rem clamp(2rem, 6vw, 5rem);
-    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--fr-branco);
-    background-color: var(--fr-primaria);
-    border-radius: 999px;
-    box-shadow: var(--fr-sombra-media);
-}
-
-.lista-cargos {
-    display: grid;
-    gap: 2.5rem;
-    justify-items: center;
-}
-
-.btn-cargo {
-    width: 100%;
-    max-width: 34rem;
-    min-height: 6.5rem;
-    font-family: var(--fr-fonte);
-    font-size: clamp(1.4rem, 1rem + 1.2vw, 2rem);
-    font-weight: 600;
-    color: var(--fr-azul-escuro);
-    background-color: var(--fr-branco);
-    border: 1px solid var(--fr-borda-card);
-    border-radius: 0.6rem;
-    box-shadow: var(--fr-sombra);
-    cursor: pointer;
-    transition: border-color var(--fr-transicao), color var(--fr-transicao),
-        box-shadow var(--fr-transicao), transform var(--fr-transicao);
-}
-
-.btn-cargo:hover {
-    color: var(--fr-primaria);
-    border-color: var(--fr-primaria);
-    box-shadow: var(--fr-sombra-forte);
-    transform: translateY(-3px);
-}
-
-.btn-cargo:active {
-    transform: translateY(0);
-    box-shadow: var(--fr-sombra);
-}
-
-/* ---------- 9. Menus (gestor, maquinista, cliente) + sidebar ---------- */
 .sidebar {
     position: fixed;
     inset: 0 auto 0 0;
@@ -587,7 +513,6 @@ button.iconPesquisa:hover {
     transition: width 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* ao passar o mouse a sidebar abre mostrando os nomes (mockup "sidebar aberto") */
 .sidebar:hover,
 .sidebar:focus-within {
     width: 15rem;
@@ -663,13 +588,6 @@ button.iconPesquisa:hover {
     padding-left: calc(6rem + var(--fr-respiro));
 }
 
-.saudacao {
-    max-width: 50rem;
-    margin: -1rem auto 1.5rem;
-    color: var(--fr-cinza-texto);
-    font-weight: 500;
-}
-
 .pg-menu .conteudo {
     display: grid;
     grid-template-columns: 1fr;
@@ -716,7 +634,6 @@ button.iconPesquisa:hover {
         gap: 2.25rem 3.5rem;
     }
 
-    /* no mockup do cliente os cards ficam em uma coluna só */
     .pg-menu-cliente .conteudo {
         grid-template-columns: 1fr;
         max-width: 39rem;
@@ -728,7 +645,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 10. Gestão Geral (Dashboard) ---------- */
 .pg-geral > h1 {
     justify-content: flex-start;
     max-width: 46rem;
@@ -780,7 +696,6 @@ button.iconPesquisa:hover {
     box-shadow: var(--fr-sombra-media);
 }
 
-/* primeiro painel: legenda à esquerda e gráfico à direita */
 .card-metrica-painel:first-child {
     flex-direction: row;
     align-items: center;
@@ -808,15 +723,15 @@ button.iconPesquisa:hover {
 }
 
 .cor-em-rota {
-    background-color: var(--fr-primaria);
+    background-color: #2e9d5b;
 }
 
 .cor-disponivel {
-    background-color: #8fb3e8;
+    background-color: #9fd3b2;
 }
 
 .cor-manutencao {
-    background-color: #c9d2e3;
+    background-color: #e0a800;
 }
 
 .imagem-grafico-box img,
@@ -849,7 +764,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 11. Gestão de Rotas ---------- */
 .rotas {
     position: relative;
     display: flex;
@@ -958,6 +872,9 @@ button.iconPesquisa:hover {
     border-radius: 0.35rem;
 }
 
+.badge-status-leitura.status-normal  { color: #1e7a4a; }
+.badge-status-leitura.status-atencao { color: #8a6100; }
+.badge-status-leitura.status-critico { color: var(--fr-perigo); }
 
 .caixa-mensagem-alerta {
     display: flex;
@@ -998,7 +915,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 12. Monitoramento de Cargas ---------- */
 .pg-monitoramento .conteudo {
     display: grid;
     grid-template-columns: 1fr;
@@ -1040,7 +956,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 13. Formulários (manutenção, cargas, sensores) ---------- */
 .pg-form .conteudo {
     display: grid;
     gap: 2rem;
@@ -1086,7 +1001,6 @@ button.iconPesquisa:hover {
     gap: 1rem;
 }
 
-/* desktop: campos à esquerda e botão grande à direita (manutenção e cargas) */
 @media (min-width: 992px) {
     .pg-form-duplo .conteudo {
         grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
@@ -1105,7 +1019,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 14. Gerenciamento de Sensores ---------- */
 .pg-sensores .conteudo {
     display: grid;
     gap: 3rem;
@@ -1184,7 +1097,6 @@ button.iconPesquisa:hover {
     border-top: 1px solid var(--fr-linha);
 }
 
-/* ---------- 15. Alertas e Notificações ---------- */
 .listaAlertas {
     display: grid;
     gap: 1.75rem;
@@ -1218,7 +1130,6 @@ button.iconPesquisa:hover {
     font-weight: 600;
 }
 
-/* alerta do tipo "aviso" leva o ícone ⚠ como no mockup */
 .cardAlerta--aviso .texto-alerta p::after {
     content: " ⚠️";
 }
@@ -1256,7 +1167,6 @@ button.iconPesquisa:hover {
     background-color: rgba(179, 38, 30, 0.08);
 }
 
-/* ---------- 16. Gestão de Funcionários ---------- */
 .lista-funcionarios {
     display: grid;
     gap: 0.75rem;
@@ -1301,13 +1211,11 @@ button.iconPesquisa:hover {
     font-weight: 500;
 }
 
-/* ---------- 17. Perfis (funcionário e pessoal) ---------- */
 .pg-perfil .conteudo {
     max-width: var(--fr-largura);
     margin: 0 auto;
 }
 
-/* perfil do funcionário: faixa azul com ícone + cartão de informações */
 .banner-perfil {
     display: grid;
     place-items: center;
@@ -1378,7 +1286,6 @@ button.iconPesquisa:hover {
     .span-6 { grid-column: span 6; }
 }
 
-/* perfil pessoal: avatar + lista de informações */
 .avatar {
     display: grid;
     place-items: end center;
@@ -1454,7 +1361,6 @@ button.iconPesquisa:hover {
     border-color: var(--fr-borda);
 }
 
-/* ---------- 18. Relatórios ---------- */
 .resumo-relatorio {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1519,7 +1425,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 19. Listas, selos e filtros (monitoramento e sensores) ---------- */
 .titulo-secao {
     margin: 0;
     font-size: 1.05rem;
@@ -1646,7 +1551,6 @@ button.iconPesquisa:hover {
     border-radius: var(--fr-raio);
 }
 
-/* ---------- 20. Avisos flutuantes (toasts do global.js) ---------- */
 .tr4-avisos {
     position: fixed;
     right: 1rem;
@@ -1690,7 +1594,6 @@ button.iconPesquisa:hover {
     }
 }
 
-/* ---------- 21. Acessibilidade e impressão ---------- */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

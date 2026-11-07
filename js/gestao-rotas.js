@@ -15,7 +15,7 @@ iniciarPagina(async () => {
             .map((linha) => `
                 <div class="bloco-linha">
                     <span class="label-linha">${escapar(linha.nome)}</span>
-                    <div class="badge-status-leitura">${escapar(linha.status)}</div>
+                    <div class="badge-status-leitura status-${linha.status === "Atrasado" ? "critico" : linha.status === "Já partiu" ? "normal" : "atencao"}">${escapar(linha.status)}</div>
                 </div>`)
             .join("");
 

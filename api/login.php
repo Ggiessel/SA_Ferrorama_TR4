@@ -15,15 +15,11 @@ if ($senha === "") {
 
 $resultado = consultar("SELECT * FROM usuarios WHERE email = ?", [$email]);
 
-if (!$resultado) {
-    erro("Não existe conta com esse e-mail.", "emailLogin", 401);
+if (!$resultado || !password_verify($senha, $resultado[0]["senha"])) {
+    erro("E-mail ou senha incorretos.", null, 401);
 }
 
 $usuario = $resultado[0];
-
-if (!password_verify($senha, $usuario["senha"])) {
-    erro("Senha incorreta.", "senhaLogin", 401);
-}
 
 unset($usuario["senha"]);
 $_SESSION["usuario"] = $usuario;
