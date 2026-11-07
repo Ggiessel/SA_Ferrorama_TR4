@@ -12,23 +12,17 @@
     <title>Seleção de Usuário</title>
 </head>
 <body class="pg-selecao">
-   <div class="logo">
-        <img src="../img/logoTR4.png" alt="Logo TR4"> 
-    </div>  
 
-    <div><h2>ESCOLHA SEU CARGO</h2></div>
+    <header class="topo-selecao">
+        <img src="../img/logoTR4.png" alt="Logo TR4" class="logo-trem">
+        <h1 class="titulo-pilula">ESCOLHA SEU CARGO</h1>
+    </header>
 
-
-
-    <div class="btnCliente">
-    <button type="button" class="btn_cliente" data-cargo="cliente">Cliente</button>
-    </div>
-       <div class="btnMaquinista">
-    <button type="button" class="btn_maquinista" data-cargo="maquinista">Maquinista</button>
-    </div>
-       <div class="btnGestor">
-    <button type="button" class="btn_gestor" data-cargo="gestor">Gestor</button>
-    </div>
+    <main class="lista-cargos">
+        <button type="button" class="btn-cargo" data-cargo="cliente">Cliente</button>
+        <button type="button" class="btn-cargo" data-cargo="maquinista">Maquinista</button>
+        <button type="button" class="btn-cargo" data-cargo="gestor">Gestor</button>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>

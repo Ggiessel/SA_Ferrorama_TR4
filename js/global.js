@@ -109,11 +109,11 @@ function irParaMenu(usuario = usuarioAtual) {
 
 function configurarNavegacao() {
     document.querySelectorAll("h1 > .bi-list").forEach((icone) => {
-        icone.addEventListener("click", () => irParaMenu());
+        tornarClicavel(icone, "Voltar ao menu", () => irParaMenu());
     });
 
     document.querySelectorAll("h1 > .bi-arrow-left-short").forEach((icone) => {
-        icone.addEventListener("click", () => history.back());
+        tornarClicavel(icone, "Voltar", () => history.back());
     });
 
     document.querySelectorAll("[data-link='menu']").forEach((link) => {
@@ -142,6 +142,19 @@ function configurarNavegacao() {
             link.parentElement.remove();
         });
     }
+}
+
+function tornarClicavel(icone, descricao, acao) {
+    icone.setAttribute("role", "button");
+    icone.setAttribute("tabindex", "0");
+    icone.setAttribute("aria-label", descricao);
+    icone.addEventListener("click", acao);
+    icone.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+            evento.preventDefault();
+            acao();
+        }
+    });
 }
 
 function avisar(mensagem, tipo = "info") {

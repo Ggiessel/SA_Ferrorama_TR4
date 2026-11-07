@@ -18,7 +18,7 @@ iniciarPagina((usuario) => {
         });
     });
 
-    document.querySelector(".card").insertAdjacentHTML(
+    document.querySelector(".conteudo").insertAdjacentHTML(
         "beforebegin",
         `<p class="saudacao">Olá, ${escapar(usuario.nome)}! O que você quer acompanhar hoje?</p>`
     );

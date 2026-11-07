@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,47 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
-    <title>cadastro de cargas</title>
-
+    <title>Cadastro de Cargas</title>
 </head>
+<body class="pg-form pg-form-duplo">
 
-<body class="pg-carga">
-    <h1><i class="bi bi-list"></i> Cadastro de Cargas </h1>
+    <h1><i class="bi bi-list"></i>Cadastro de Cargas</h1>
 
-    <div class="formulario">
-        <div>
-            <div>
-                <b> Escolha a carga do trem: </b>
-                <div class="select-wrapper">
-                    <select id="tipoCarga" aria-label="Carga do trem">
-                        <option>Carvão</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <b> Escolha o tamanho da carga: </b>
-                <div class="select-wrapper">
-                    <select id="tamanhoCarga" aria-label="Tamanho da carga">
-                        <option>2 toneladas</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <b> Escolha o destino da carga: </b>
-                <div class="select-wrapper">
-                    <select id="destinoCarga" aria-label="Destino da carga">
-                        <option>São Paulo</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <b> Escolha a data de partida: </b>
-                <input type="date" id="dataPartida" aria-label="Data de partida">
-            </div>
+    <main class="conteudo">
+        <div class="campo">
+            <label for="tipoCarga">Escolha a carga do trem:</label>
+            <select id="tipoCarga"></select>
         </div>
 
-        <button type="button" class="btn-salvar">Salvar</button>
-    </div>
+        <div class="campo">
+            <label for="tamanhoCarga">Escolha o tamanho da carga:</label>
+            <select id="tamanhoCarga"></select>
+        </div>
+
+        <div class="campo">
+            <label for="destinoCarga">Escolha o destino da carga:</label>
+            <select id="destinoCarga"></select>
+        </div>
+
+        <div class="campo">
+            <label for="dataPartida">Escolha a data de partida:</label>
+            <input type="date" id="dataPartida">
+        </div>
+
+        <div class="acoes">
+            <button type="button" class="btn-primario btn-grande btn-salvar">Salvar</button>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>

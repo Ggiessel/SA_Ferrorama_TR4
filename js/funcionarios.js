@@ -13,7 +13,8 @@ iniciarPagina(async () => {
         lista.innerHTML = funcionarios
             .map((funcionario) => `
                 <a class="funcionarios" href="perfil-funcionario.html?id=${funcionario.id}">
-                    <span>${escapar(funcionario.nome)}</span>
+                    <i class="bi bi-person" aria-hidden="true"></i>
+                    <span class="nome-funcionario">${escapar(funcionario.nome)}</span>
                     <span class="item-detalhe">${escapar(funcionario.cargo)}</span>
                 </a>`)
             .join("");

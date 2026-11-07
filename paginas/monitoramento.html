@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,29 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
-    <title>Monitoramento de Carga</title>
+    <title>Monitoramento de Cargas</title>
 </head>
+<body class="pg-monitoramento">
 
-<body class="pg-form">
-<div class="tela-label"></div>
+    <h1><i class="bi bi-list"></i>Monitoramento de Cargas</h1>
 
-<div class="card">
-  <div class="header">
-    <div class="menu-icon">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <h1><i class="bi bi-list"></i>Monitoramento de Carga</h1>
-  </div>
+    <main class="conteudo">
+        <div class="mapa-monitor">
+            <img src="../img/mapaIlustrativo.jpg" alt="Mapa das rotas monitoradas">
+        </div>
 
-  <div class="Imagem">
-    <img src="../img/mapaIlustrativo.jpg" alt="Mapa das rotas monitoradas">
-</div>
+        <section class="painel-monitor">
+            <h2 class="titulo-secao">Cargas em transporte</h2>
+            <div class="filtro-status" id="filtroStatus" role="group" aria-label="Filtrar cargas por status"></div>
+            <ul class="lista-itens" id="listaCargas"></ul>
+        </section>
+    </main>
 
-  <div class="filtro-status" id="filtroStatus" role="group" aria-label="Filtrar cargas por status"></div>
-  <ul class="lista-itens" id="listaCargas"></ul>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/monitoramento.js"></script>
