@@ -18,7 +18,7 @@ iniciarPagina(async () => {
                 <li class="item-lista">
                     <div>
                         <strong>${escapar(sensor.tipo)}</strong>
-                        <span class="item-detalhe">${escapar(sensor.rota)}</span>
+                        <span class="item-detalhe">${escapar(sensor.grandeza)} · ${escapar(sensor.trem)}</span>
                     </div>
                     <span class="selo selo--${sensor.status}">${situacao}</span>
                 </li>`;

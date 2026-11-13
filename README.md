@@ -2,14 +2,18 @@
 
 ## Equipe
 
-Gabriel Giessel e [completar com os nomes dos demais integrantes] — Turma DS24 M3.
-SESI/SENAI Joinville Moinho — Desenvolvimento de Sistemas — Projeto de Mapeamento de Ferrovias.
+- Matheus de Souza Salem Bello
+- Gabriel Giessel de Oliveira
+- João Pedro Santoro Pereira
+- Thiago Henrique de Souza Cavallieri
+
+Turma DS24 M3 — Escola SESI de Referência Joinville Moinho — Desenvolvimento de Sistemas — Projeto de Mapeamento de Ferrovias.
 
 ## O que o sistema faz
 
-O TR4 reúne em um só lugar as informações de operação de uma ferrovia: situação dos trens, horários e status das rotas, cargas em transporte, sensores instalados, manutenções e alertas.
+O TR4 reúne em um só lugar as informações de operação de uma ferrovia: situação dos trens, horários e status das rotas, cargas em transporte, sensores IoT instalados nos trens, leituras desses sensores, manutenções e alertas.
 
-Cada pessoa entra com a própria conta e vê apenas o que o seu perfil permite. O gestor acompanha a operação inteira, cadastra cargas e sensores e consulta os relatórios. O maquinista acompanha rotas, cargas e registra manutenções. O cliente consulta as informações públicas: painel, rotas, cargas e alertas.
+Cada pessoa entra com a própria conta e vê apenas o que o seu perfil permite. O gestor acompanha a operação inteira, cadastra trens, rotas, cargas e sensores, gera leituras pelo simulador e consulta os relatórios. O maquinista acompanha rotas, cargas e registra manutenções. O cliente consulta as informações públicas: painel, rotas, cargas e alertas.
 
 ## Tecnologias
 
@@ -43,17 +47,21 @@ Se o MySQL tiver senha, ela é informada apenas em `$senhaBanco`, no arquivo `ap
 | `paginas/menu-gestor.html` | Menu do gestor | Gestor |
 | `paginas/menu-maquinista.html` | Menu do maquinista | Maquinista |
 | `paginas/menu.cliente.html` | Menu do cliente | Cliente |
-| `paginas/gestao-geral.html` | Painel: mapa, trens por status, dados por rota e por trem | Todos |
+| `paginas/gestao-geral.html` | Painel: mapa, trens por status, dados por rota e por trem, resumo dos sensores por trem, velocidade média e últimos alertas dos sensores | Todos |
 | `paginas/gestao-rotas.html` | Horários, status das linhas e alerta de cada rota | Todos |
 | `paginas/monitoramento.html` | Cargas em transporte, com filtro por status | Todos |
 | `paginas/alertas.html` | Alertas e notificações, com busca | Todos |
 | `paginas/perfil-pessoal.html` | Dados da própria conta | Todos |
 | `paginas/manutencao.html` | Registro de manutenção de trem | Gestor e maquinista |
-| `paginas/relatorios.html` | Resumo, cargas e manutenções, com impressão | Gestor e maquinista |
+| `paginas/relatorios.html` | Resumo, cargas, manutenções e leituras dos sensores com filtros por trem, situação e período; impressão e exportação CSV | Gestor e maquinista |
 | `paginas/cadastro-carga.html` | Cadastro de cargas | Gestor |
-| `paginas/gestao-sensores.html` | Lista de sensores | Gestor |
-| `paginas/adicionar-sensor.html` | Instalação de sensor | Gestor |
+| `paginas/gestao-sensores.html` | Lista de sensores IoT por trem | Gestor |
+| `paginas/adicionar-sensor.html` | Instalação de sensor em um trem | Gestor |
 | `paginas/remover-sensor.html` | Remoção de sensor | Gestor |
+| `paginas/leituras.html` | Leituras dos sensores, com filtro por trem, filtro de falhas e exportação CSV | Gestor |
+| `paginas/simulador.html` | Simulador de leituras dos sensores | Gestor |
+| `paginas/adicionar-trem.html` | Cadastro, edição, listagem e exclusão de trens | Gestor |
+| `paginas/adicionar-rota.html` | Cadastro, edição, listagem e exclusão de rotas | Gestor |
 | `paginas/funcionarios.html` | Lista de funcionários, com busca | Gestor |
 | `paginas/perfil-funcionario.html` | Edição dos dados de um funcionário | Gestor |
 
@@ -77,7 +85,15 @@ Se o MySQL tiver senha, ela é informada apenas em `$senhaBanco`, no arquivo `ap
 
 **ON DELETE.** Excluir uma rota exclui em cascata seus horários, linhas e sensores. Um trem tem a rota zerada (`SET NULL`) se a rota for excluída. Uma manutenção impede excluir o trem ou a rota a que se refere (padrão `RESTRICT`), para não perder histórico.
 
-**Sensores ligados à rota.** O sensor foi modelado como instalado em um trecho (rota), e não em um trem. Remover um sensor não apaga na hora: ele fica marcado para remoção com prazo de 4 semanas.
+**Sensores IoT ligados ao trem.** Cada sensor fica instalado em um trem (`sensores.trem_id`) e é um modelo real usado em telemetria: DS18B20 (temperatura do motor), MAX6675 (temperatura dos gases de escape), MLX90614 (temperatura do rolamento), ADXL345 e MPU-6050 (vibração), A3144 (velocidade pela roda), NEO-6M (GPS), Omnicomm LLS 5 (combustível), MPX5700AP (pressão do freio) e DHT22 (temperatura e umidade da carga). A lista fica no servidor (`tiposSensor()` em `api/conexao.php`), então só esses modelos são aceitos. Remover um sensor não apaga na hora: ele fica marcado para remoção com prazo de 4 semanas.
+
+**Leituras e limites.** A tabela `leituras` guarda velocidade (km/h), temperatura do motor (°C), consumo (L/h) e vibração (mm/s) de cada trem, com data e hora. Os limites ficam em um só lugar (`api/funcoes-leituras.php`): 80 km/h, 105 °C, 75 L/h e 7 mm/s. A função `classificarLeitura` compara cada valor com o limite e devolve a lista de falhas. Uma leitura com falha aparece em vermelho e gera um alerta na tela de Alertas.
+
+**Simulador.** Enquanto os sensores físicos não enviam dados, o simulador gera de 1 a 200 leituras para um trem, uma a cada cinco minutos, terminando no horário atual. Um dispositivo real (por exemplo, um ESP32 com os sensores acima) pode enviar uma leitura com `POST` para `api/leituras.php`, com os quatro valores e o `trem_id`.
+
+**Trens e rotas.** O gestor cadastra, edita e exclui trens e rotas pelas telas Adicionar Trens e Adicionar Rotas. Um trem "em rota" precisa ter uma rota. Excluir um trem apaga junto suas leituras e seus sensores (`ON DELETE CASCADE`). Excluir uma rota deixa os trens dela como disponíveis. Trens e rotas com manutenções registradas não podem ser excluídos, para não perder o histórico. A exclusão sempre pede confirmação.
+
+**Relatório e CSV.** O relatório de leituras filtra por trem, situação do trem e período, e mostra total de leituras, leituras com alerta, velocidade média e temperatura média. O mesmo filtro gera o arquivo CSV (`api/exportar-leituras.php`), separado por ponto e vírgula para abrir direto no Excel.
 
 **Alertas em uma tabela só.** Alertas e notificações ficam na tabela `alertas`, com tipo `info`, `aviso` ou `atraso`. Alguns são gerados automaticamente, como quando uma carga é entregue. Só o gestor pode apagar alertas, com confirmação.
 
@@ -87,19 +103,20 @@ Se o MySQL tiver senha, ela é informada apenas em `$senhaBanco`, no arquivo `ap
 
 ## Limitações conhecidas
 
-O projeto não seguiu toda a estrutura e todas as entregas definidas nos guias dos blocos 2, 3 e 4. Conforme a orientação do Fechamento, nada novo foi construído nesta etapa, e o que falta está registrado aqui:
-
-- **Arquitetura diferente da dos guias.** As telas são HTML com JavaScript consumindo uma API em PHP, e não páginas PHP geradas pelo servidor com `proteger.php`, `cabecalho.php` e `permissao.php`. Os nomes de arquivo não seguem os nomes canônicos (`trens.php`, `sensores.php`, `rotas.php` e outros). A página HTML chega a abrir por um instante antes de o JavaScript redirecionar quem não está logado, mas nenhum dado é exibido sem sessão.
-- **Gestão de trens:** não há tela para cadastrar, editar, buscar ou excluir trens. Os trens existem no banco e aparecem no painel.
-- **Sensores:** estão ligados a rotas, e não a trens, e não têm edição.
-- **Rotas:** só há consulta. Não há cadastro, edição, exclusão nem os filtros por data e trem.
-- **Leituras, simulador e alertas por regra de severidade:** não foram implementados. Os alertas não têm severidade normal, atenção ou crítico.
-- **Painel:** não mostra os cinco indicadores definidos no Bloco 4 nem diferencia o conteúdo por perfil.
-- **Relatórios:** não há escolha de tipo e período nem exportação em CSV. Há impressão.
-- **Gestão de usuários:** não há desativação de usuários, travas de proteção nem recuperação de senha. A mudança de perfil de um usuário só pode ser feita direto no banco, pelo phpMyAdmin.
-- **Vocabulário:** a tela de funcionários usa o termo "funcionários" e uma tabela separada de `usuarios`, diferente do vocabulário padronizado ("usuários").
-- **Celular:** o layout foi pensado para desktop. As tabelas do relatório rolam na horizontal no celular, sem virar cartões.
+- **Arquitetura diferente da dos guias.** As telas são HTML com JavaScript consumindo uma API em PHP com PDO, e não páginas PHP geradas pelo servidor com mysqli, `proteger.php` e `cabecalho.php`. Os nomes de arquivo não seguem os nomes canônicos. A página HTML chega a abrir por um instante antes de o JavaScript redirecionar quem não está logado, mas nenhum dado é exibido sem sessão.
+- **Sensores e leituras:** as leituras guardam as quatro grandezas fixas (velocidade, temperatura do motor, consumo e vibração). Os demais sensores cadastrados (pressão do freio, rolamento, carga) ainda não têm leituras próprias.
+- **Rotas:** não há filtros de rotas por data e trem.
+- **Alertas:** os alertas não têm os três níveis de severidade (normal, atenção, crítico).
+- **Gestão de usuários:** não há desativação de usuários nem recuperação de senha. A mudança de perfil de um usuário só pode ser feita direto no banco, pelo phpMyAdmin.
+- **Vocabulário:** a tela de funcionários usa o termo "funcionários" e uma tabela separada de `usuarios`.
+- **Celular:** o layout foi pensado para desktop. As tabelas rolam na horizontal no celular, sem virar cartões.
 
 ## Uso de inteligência artificial
 
-
+| Etapa | Ferramenta | O que a IA fez | O que a equipe fez |
+|---|---|---|---|
+| Planejamento e design | — | — | Definiu o problema, os perfis e as telas; criou os mockups no Figma |
+| Implementação (HTML, JS, PHP, SQL) | [completar] | [completar] | [completar] |
+| CSS e ajuste visual aos mockups | Claude (Anthropic) | Escreveu e reorganizou o CSS para seguir os mockups e a devolutiva | Comparou com os mockups e pediu os ajustes |
+| Instalação e integração | — | — | Configurou o XAMPP, importou o banco e resolveu os conflitos no Git |
+| Conferência com os guias | Claude (Anthropic) | Apontou falhas de segurança, corrigiu e rascunhou este README | Revisou as correções, executou o roteiro de testes e completou o README |

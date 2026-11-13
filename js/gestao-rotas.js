@@ -17,7 +17,7 @@ iniciarPagina(async () => {
                     <span class="label-linha">${escapar(linha.nome)}</span>
                     <div class="badge-status-leitura status-${linha.status === "Atrasado" ? "critico" : linha.status === "Já partiu" ? "normal" : "atencao"}">${escapar(linha.status)}</div>
                 </div>`)
-            .join("");
+            .join("") || '<span class="label-linha">Nenhuma linha cadastrada.</span>';
 
         document.querySelector(".caixa-mensagem-alerta").innerHTML = `
             <span class="emoji-alerta">${rota.alerta ? "⚠️" : "✅"}</span>

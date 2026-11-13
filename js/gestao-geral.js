@@ -50,4 +50,53 @@ iniciarPagina(async () => {
     selectTrem.addEventListener("change", mostrarTrem);
     mostrarRota();
     mostrarTrem();
+
+    const painel = await api("painel.php");
+    const limites = painel.limites;
+
+    function numero(valor, unidade) {
+        return Number(valor).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + unidade;
+    }
+
+    document.getElementById("limitesPainel").textContent =
+        `Total de ${painel.total_leituras} leituras registradas. Limites: velocidade ${limites.velocidade_kmh} km/h, temperatura ${limites.temperatura_motor_c} °C, consumo ${limites.consumo_litros_hora} L/h, vibração ${limites.vibracao_mm_s} mm/s.`;
+
+    document.querySelector("#tabelaResumo tbody").innerHTML = painel.resumo
+        .map((trem) => {
+            const temLeituras = trem.total_leituras > 0;
+
+            return `
+                <tr>
+                    <td>${escapar(trem.nome)}</td>
+                    <td>${trem.total_leituras}</td>
+                    <td>${temLeituras ? numero(trem.media_velocidade, "km/h") : "—"}</td>
+                    <td class="${trem.maior_velocidade > limites.velocidade_kmh ? "acima" : ""}">${temLeituras ? numero(trem.maior_velocidade, "km/h") : "—"}</td>
+                    <td>${temLeituras ? numero(trem.media_temperatura, "°C") : "—"}</td>
+                    <td class="${trem.maior_temperatura > limites.temperatura_motor_c ? "acima" : ""}">${temLeituras ? numero(trem.maior_temperatura, "°C") : "—"}</td>
+                </tr>`;
+        })
+        .join("");
+
+    document.getElementById("graficoVelocidade").innerHTML = painel.resumo
+        .filter((trem) => trem.total_leituras > 0)
+        .map((trem) => {
+            const largura = Math.min(100, (trem.media_velocidade / 120) * 100);
+
+            return `
+                <div class="barra-linha">
+                    <span class="barra-rotulo">${escapar(trem.nome)}</span>
+                    <span class="barra-trilho"><span class="barra-preenchida" style="width: ${largura.toFixed(2)}%"></span></span>
+                    <span class="barra-valor">${Number(trem.media_velocidade).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} km/h</span>
+                </div>`;
+        })
+        .join("") || '<p class="apoio">Nenhuma leitura registrada ainda.</p>';
+
+    document.querySelector("#tabelaAlertasSensores tbody").innerHTML = painel.alertas
+        .map((leitura) => `
+            <tr>
+                <td>${formatarData(leitura.data_hora)} ${leitura.data_hora.slice(11, 16)}</td>
+                <td>${escapar(leitura.trem)}</td>
+                <td>${escapar(leitura.falhas.join(" · "))}</td>
+            </tr>`)
+        .join("") || '<tr><td colspan="3">Nenhuma leitura ultrapassou os limites definidos.</td></tr>';
 });

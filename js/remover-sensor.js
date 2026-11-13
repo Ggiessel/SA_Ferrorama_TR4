@@ -3,7 +3,7 @@ iniciarPagina(async () => {
     const ativos = sensores.filter((sensor) => sensor.status === "ativo");
     const select = document.getElementById("sensor");
 
-    preencherSelect(select, ativos.map((sensor) => ({ valor: sensor.id, texto: sensor.tipo + " - " + sensor.rota })));
+    preencherSelect(select, ativos.map((sensor) => ({ valor: sensor.id, texto: sensor.tipo + " (" + sensor.grandeza + ") - " + sensor.trem })));
 
     document.querySelector(".btn-remover").addEventListener("click", async () => {
         if (!select.value || !confirm("Remover este sensor?")) {

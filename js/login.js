@@ -1,4 +1,11 @@
-iniciarPagina(() => {
+iniciarPagina(async () => {
+    const sessao = await fetch(API + "usuario.php").catch(() => null);
+
+    if (sessao && sessao.ok) {
+        irParaMenu(await sessao.json());
+        return;
+    }
+
     document.getElementById("formLogin").addEventListener("submit", async (evento) => {
         evento.preventDefault();
         limparErros();

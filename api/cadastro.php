@@ -16,6 +16,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if (strlen($senha) < 6) {
     erro("A senha precisa ter pelo menos 6 caracteres.", "senhaCadastro");
 }
+if ($senha !== ($dados["confirmacao"] ?? "")) {
+    erro("A confirmação não confere com a senha.", "confirmacaoCadastro");
+}
 if (consultar("SELECT id FROM usuarios WHERE email = ?", [$email])) {
     erro("Esse e-mail já tem conta.", "emailCadastro");
 }
@@ -26,6 +29,7 @@ executar(
 );
 
 $usuario = consultar("SELECT id, nome, email, cargo, nascimento, ativo_desde, telefone FROM usuarios WHERE email = ?", [$email])[0];
+session_regenerate_id(true);
 $_SESSION["usuario"] = $usuario;
 
 responder($usuario, 201);

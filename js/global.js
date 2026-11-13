@@ -21,6 +21,10 @@ const PERMISSOES = {
     "gestao-sensores": ["gestor"],
     "adicionar-sensor": ["gestor"],
     "remover-sensor": ["gestor"],
+    "leituras": ["gestor"],
+    "simulador": ["gestor"],
+    "adicionar-trem": ["gestor"],
+    "adicionar-rota": ["gestor"],
     "funcionarios": ["gestor"],
     "perfil-funcionario": ["gestor"]
 };

@@ -22,6 +22,7 @@ if (!$resultado || !password_verify($senha, $resultado[0]["senha"])) {
 $usuario = $resultado[0];
 
 unset($usuario["senha"]);
+session_regenerate_id(true);
 $_SESSION["usuario"] = $usuario;
 
 responder($usuario);

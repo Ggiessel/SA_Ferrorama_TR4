@@ -10,26 +10,37 @@ $prazo = date("Y-m-d", strtotime("+28 days"));
 if ($metodo === "POST") {
     $dados = dadosRecebidos();
     $tipo = $dados["tipo"] ?? "";
-    $rotaId = $dados["rota_id"] ?? "";
+    $tremId = $dados["trem_id"] ?? "";
+    $grandeza = "";
 
-    $rota = consultar("SELECT nome FROM rotas WHERE id = ?", [$rotaId]);
-
-    if (!$rota) {
-        erro("Escolha o local do sensor.", "localSensor");
-    }
-    if (consultar("SELECT id FROM sensores WHERE tipo = ? AND rota_id = ? AND status <> 'remocao'", [$tipo, $rotaId])) {
-        erro("Já existe um $tipo nessa rota.", "localSensor");
+    foreach (tiposSensor() as $sensor) {
+        if ($sensor["tipo"] === $tipo) {
+            $grandeza = $sensor["grandeza"];
+        }
     }
 
-    executar("INSERT INTO sensores (tipo, rota_id, status, prazo) VALUES (?, ?, 'instalacao', ?)", [$tipo, $rotaId, $prazo]);
-    criarAlerta("Instalação do sensor $tipo na " . $rota[0]["nome"] . " prevista até " . formatarData($prazo) . ".");
+    if ($grandeza === "") {
+        erro("Escolha o tipo de sensor.", "tipoSensor");
+    }
+
+    $trem = consultar("SELECT nome FROM trens WHERE id = ?", [$tremId]);
+
+    if (!$trem) {
+        erro("Escolha o trem que vai receber o sensor.", "tremSensor");
+    }
+    if (consultar("SELECT id FROM sensores WHERE tipo = ? AND trem_id = ? AND status <> 'remocao'", [$tipo, $tremId])) {
+        erro("O " . $trem[0]["nome"] . " já tem um sensor $tipo.", "tremSensor");
+    }
+
+    executar("INSERT INTO sensores (tipo, grandeza, trem_id, status, prazo) VALUES (?, ?, ?, 'instalacao', ?)", [$tipo, $grandeza, $tremId, $prazo]);
+    criarAlerta("Instalação do sensor $tipo ($grandeza) no " . $trem[0]["nome"] . " prevista até " . formatarData($prazo) . ".");
 
     responder(["ok" => true], 201);
 }
 
 if ($metodo === "PUT") {
     $sensor = consultar(
-        "SELECT sensores.*, rotas.nome AS rota FROM sensores JOIN rotas ON rotas.id = sensores.rota_id WHERE sensores.id = ? AND sensores.status = 'ativo'",
+        "SELECT sensores.*, trens.nome AS trem FROM sensores JOIN trens ON trens.id = sensores.trem_id WHERE sensores.id = ? AND sensores.status = 'ativo'",
         [$_GET["id"] ?? 0]
     );
 
@@ -38,7 +49,7 @@ if ($metodo === "PUT") {
     }
 
     executar("UPDATE sensores SET status = 'remocao', prazo = ? WHERE id = ?", [$prazo, $sensor[0]["id"]]);
-    criarAlerta("Remoção do sensor " . $sensor[0]["tipo"] . " da " . $sensor[0]["rota"] . " prevista até " . formatarData($prazo) . ".", "aviso");
+    criarAlerta("Remoção do sensor " . $sensor[0]["tipo"] . " do " . $sensor[0]["trem"] . " prevista até " . formatarData($prazo) . ".", "aviso");
 
     responder(["ok" => true]);
 }
@@ -47,8 +58,8 @@ executar("UPDATE sensores SET status = 'ativo', prazo = NULL WHERE status = 'ins
 executar("DELETE FROM sensores WHERE status = 'remocao' AND prazo <= ?", [hoje()]);
 
 responder(consultar(
-    "SELECT sensores.*, rotas.nome AS rota
+    "SELECT sensores.*, trens.nome AS trem
      FROM sensores
-     JOIN rotas ON rotas.id = sensores.rota_id
-     ORDER BY rotas.id, sensores.tipo"
+     JOIN trens ON trens.id = sensores.trem_id
+     ORDER BY trens.codigo, sensores.tipo"
 ));

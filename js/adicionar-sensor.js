@@ -1,8 +1,8 @@
 iniciarPagina(async () => {
     const opcoes = await api("opcoes.php");
 
-    preencherSelect(document.getElementById("tipoSensor"), opcoes.tiposSensor);
-    preencherSelect(document.getElementById("localSensor"), opcoes.rotas.map((rota) => ({ valor: rota.id, texto: rota.nome })));
+    preencherSelect(document.getElementById("tipoSensor"), opcoes.tiposSensor.map((sensor) => ({ valor: sensor.tipo, texto: sensor.tipo + " - " + sensor.grandeza })));
+    preencherSelect(document.getElementById("tremSensor"), opcoes.trens.map((trem) => ({ valor: trem.id, texto: trem.nome })));
 
     document.querySelector(".btn-adicionar").addEventListener("click", async () => {
         limparErros();
@@ -10,7 +10,7 @@ iniciarPagina(async () => {
         try {
             await api("sensores.php", "POST", {
                 tipo: valor("tipoSensor"),
-                rota_id: valor("localSensor")
+                trem_id: valor("tremSensor")
             });
             location.href = "gestao-sensores.html";
         } catch (erro) {

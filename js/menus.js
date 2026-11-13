@@ -7,7 +7,9 @@ iniciarPagina(() => {
         "Relatórios e Análises": "relatorios.html",
         "Alertas e Notificações": "alertas.html",
         "Cadastro de Cargas": "cadastro-carga.html",
-        "Cadastro de Sensores": "gestao-sensores.html"
+        "Cadastro de Sensores": "gestao-sensores.html",
+        "Adicionar Trens": "adicionar-trem.html",
+        "Adicionar Rotas": "adicionar-rota.html"
     };
 
     const botoes = document.querySelectorAll(".botao-menu");

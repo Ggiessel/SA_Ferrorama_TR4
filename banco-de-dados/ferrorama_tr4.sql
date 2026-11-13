@@ -44,6 +44,9 @@ CREATE TABLE trens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo CHAR(3) NOT NULL UNIQUE,
     nome VARCHAR(30) NOT NULL,
+    modelo VARCHAR(80) NOT NULL,
+    ano_fabricacao YEAR NOT NULL,
+    capacidade_toneladas DECIMAL(8,2) NOT NULL,
     status ENUM('em_rota', 'disponivel', 'manutencao') NOT NULL DEFAULT 'disponivel',
     rota_id INT NULL,
     consumo DECIMAL(5,2) NOT NULL,
@@ -76,10 +79,23 @@ CREATE TABLE cargas (
 CREATE TABLE sensores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(40) NOT NULL,
-    rota_id INT NOT NULL,
+    grandeza VARCHAR(60) NOT NULL,
+    trem_id INT NOT NULL,
     status ENUM('ativo', 'instalacao', 'remocao') NOT NULL DEFAULT 'instalacao',
     prazo DATE NULL,
-    FOREIGN KEY (rota_id) REFERENCES rotas (id) ON DELETE CASCADE
+    FOREIGN KEY (trem_id) REFERENCES trens (id) ON DELETE CASCADE
+);
+
+CREATE TABLE leituras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trem_id INT NOT NULL,
+    data_hora DATETIME NOT NULL,
+    velocidade_kmh DECIMAL(6,2) NOT NULL,
+    temperatura_motor_c DECIMAL(6,2) NOT NULL,
+    consumo_litros_hora DECIMAL(6,2) NOT NULL,
+    vibracao_mm_s DECIMAL(6,2) NOT NULL,
+    FOREIGN KEY (trem_id) REFERENCES trens (id) ON DELETE CASCADE,
+    INDEX (data_hora)
 );
 
 CREATE TABLE manutencoes (
@@ -129,14 +145,14 @@ INSERT INTO linhas (rota_id, nome, status) VALUES
     (5, 'Linha 1', 'Em espera'), (5, 'Linha 2', 'Em espera'),
     (6, 'Linha 1', 'Já partiu'), (6, 'Linha 2', 'Atrasado');
 
-INSERT INTO trens (codigo, nome, status, rota_id, consumo, faturamento) VALUES
-    ('008', 'Trem 08', 'em_rota', 4, 14, 1300000),
-    ('009', 'Trem 09', 'em_rota', 2, 12, 980000),
-    ('010', 'Trem 10', 'disponivel', NULL, 15, 1120000),
-    ('011', 'Trem 11', 'em_rota', 1, 13, 870000),
-    ('012', 'Trem 12', 'disponivel', NULL, 11, 640000),
-    ('013', 'Trem 13', 'em_rota', 6, 14, 1450000),
-    ('014', 'Trem 14', 'em_rota', 5, 13, 910000);
+INSERT INTO trens (codigo, nome, modelo, ano_fabricacao, capacidade_toneladas, status, rota_id, consumo, faturamento) VALUES
+    ('008', 'Trem 08', 'GE AC44i', 2014, 6200.00, 'em_rota', 4, 14, 1300000),
+    ('009', 'Trem 09', 'EMD SD70ACe', 2011, 5800.50, 'em_rota', 2, 12, 980000),
+    ('010', 'Trem 10', 'GE Dash 9-40BBW', 2006, 5400.00, 'disponivel', NULL, 15, 1120000),
+    ('011', 'Trem 11', 'GE ES44AC', 2016, 6000.00, 'em_rota', 1, 13, 870000),
+    ('012', 'Trem 12', 'EMD SD40-2', 1999, 5100.75, 'disponivel', NULL, 11, 640000),
+    ('013', 'Trem 13', 'GE AC44i', 2018, 6200.00, 'em_rota', 6, 14, 1450000),
+    ('014', 'Trem 14', 'EMD GT46AC', 2009, 5600.00, 'em_rota', 5, 13, 910000);
 
 INSERT INTO funcionarios (nome, cargo, ativo_desde, email, telefone, cpf, nascimento, endereco) VALUES
     ('Ana Oliveira', 'Gestora de tráfego', '2018-03-12', 'ana.oliveira@tr4.com', '(47) 98811-2201', '529.982.247-25', '1987-04-08', 'Rua XV de Novembro, 120 - Joinville/SC'),
@@ -153,10 +169,23 @@ INSERT INTO cargas (tipo, toneladas, destino, partida, status, progresso) VALUES
     ('Sacos de milho', 10, 'Curitiba', CURDATE() + INTERVAL 3 DAY, 'aguardando', 0),
     ('Minério de ferro', 100, 'Rio de Janeiro', CURDATE() - INTERVAL 6 DAY, 'entregue', 100);
 
-INSERT INTO sensores (tipo, rota_id, status, prazo) VALUES
-    ('GEL 2747', 1, 'ativo', NULL),
-    ('TMP 220', 2, 'ativo', NULL),
-    ('VBR 15', 3, 'ativo', NULL);
+INSERT INTO sensores (tipo, grandeza, trem_id, status, prazo) VALUES
+    ('DS18B20', 'Temperatura do motor', 1, 'ativo', NULL),
+    ('ADXL345', 'Vibração', 1, 'ativo', NULL),
+    ('A3144', 'Velocidade (sensor Hall na roda)', 1, 'ativo', NULL),
+    ('Omnicomm LLS 5', 'Nível e consumo de combustível', 1, 'ativo', NULL),
+    ('DS18B20', 'Temperatura do motor', 2, 'ativo', NULL),
+    ('MPU-6050', 'Vibração e inclinação', 2, 'ativo', NULL),
+    ('NEO-6M', 'Localização e velocidade (GPS)', 2, 'ativo', NULL),
+    ('MPX5700AP', 'Pressão do freio', 4, 'ativo', NULL);
+
+INSERT INTO leituras (trem_id, data_hora, velocidade_kmh, temperatura_motor_c, consumo_litros_hora, vibracao_mm_s) VALUES
+    (1, NOW() - INTERVAL 25 MINUTE, 62.40, 88.10, 48.30, 3.20),
+    (1, NOW() - INTERVAL 20 MINUTE, 71.80, 92.50, 55.10, 4.10),
+    (1, NOW() - INTERVAL 15 MINUTE, 84.30, 101.20, 61.70, 5.60),
+    (1, NOW() - INTERVAL 10 MINUTE, 76.90, 108.40, 66.20, 7.90),
+    (2, NOW() - INTERVAL 20 MINUTE, 55.20, 85.60, 42.80, 2.70),
+    (2, NOW() - INTERVAL 10 MINUTE, 68.70, 90.30, 51.40, 3.80);
 
 INSERT INTO alertas (mensagem, tipo, data) VALUES
     ('Seu trem está a caminho!', 'info', NOW()),

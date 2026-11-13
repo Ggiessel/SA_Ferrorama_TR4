@@ -40,6 +40,50 @@
         </div>
     </section>
 
+    <section class="bloco-relatorio">
+        <h2>Leituras dos sensores</h2>
+
+        <form class="filtros" id="filtrosRelatorio">
+            <div class="campo">
+                <label for="relTrem">Trem</label>
+                <select id="relTrem"></select>
+            </div>
+            <div class="campo">
+                <label for="relStatus">Situação do trem</label>
+                <select id="relStatus">
+                    <option value="">Todas</option>
+                    <option value="em_rota">Em rota</option>
+                    <option value="disponivel">Disponível</option>
+                    <option value="manutencao">Em manutenção</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="relDataInicial">Data inicial</label>
+                <input type="date" id="relDataInicial">
+            </div>
+            <div class="campo">
+                <label for="relDataFinal">Data final</label>
+                <input type="date" id="relDataFinal">
+            </div>
+            <div class="acoes-filtro">
+                <button type="submit" class="btn-primario">Gerar relatório</button>
+                <a href="#" id="linkCsvRelatorio" class="btn-secundario">Exportar CSV</a>
+            </div>
+        </form>
+
+        <div class="resumo-relatorio" id="resumoLeituras"></div>
+        <p class="apoio" id="limitesRelatorio"></p>
+
+        <div class="table-responsive">
+            <table class="table" id="tabelaLeiturasRelatorio">
+                <thead>
+                    <tr><th>Data e hora</th><th>Trem</th><th>Situação do trem</th><th>Velocidade</th><th>Temperatura</th><th>Consumo</th><th>Vibração</th><th>Status</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
     <div class="acoes">
         <button type="button" id="btnImprimir" class="btn-primario btn-grande pdf-btn">Salvar como PDF</button>
     </div>

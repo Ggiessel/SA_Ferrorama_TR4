@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
+    <title>Adicionar Trens</title>
+</head>
+<body class="pg-form pg-cadastro">
+    <h1><i class="bi bi-list"></i>Adicionar Trens</h1>
+
+    <main class="conteudo">
+        <form id="formTrem" class="grade-campos" novalidate>
+            <div class="campo">
+                <label for="codigoTrem">Código do trem:</label>
+                <input type="text" id="codigoTrem" placeholder="EX: 015" inputmode="numeric" maxlength="3">
+            </div>
+
+            <div class="campo">
+                <label for="nomeTrem">Nome do trem:</label>
+                <input type="text" id="nomeTrem" placeholder="EX: Trem 15" maxlength="30">
+            </div>
+
+            <div class="campo">
+                <label for="modeloTrem">Modelo da locomotiva:</label>
+                <input type="text" id="modeloTrem" placeholder="EX: GE AC44i" maxlength="80">
+            </div>
+
+            <div class="campo">
+                <label for="anoTrem">Ano de fabricação:</label>
+                <input type="number" id="anoTrem" placeholder="EX: 2015" min="1901">
+            </div>
+
+            <div class="campo">
+                <label for="capacidadeTrem">Capacidade (toneladas):</label>
+                <input type="number" id="capacidadeTrem" placeholder="EX: 6200" min="1" step="0.01">
+            </div>
+
+            <div class="campo">
+                <label for="consumoTrem">Consumo (km/L):</label>
+                <input type="number" id="consumoTrem" placeholder="EX: 13" min="1" step="0.01">
+            </div>
+
+            <div class="campo">
+                <label for="statusTrem">Situação:</label>
+                <select id="statusTrem">
+                    <option value="disponivel">Disponível</option>
+                    <option value="em_rota">Em rota</option>
+                    <option value="manutencao">Em manutenção</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="rotaTrem">Rota atual:</label>
+                <select id="rotaTrem"></select>
+            </div>
+
+            <div class="acoes">
+                <button type="submit" id="btnSalvarTrem" class="btn-primario btn-grande">Cadastrar</button>
+                <button type="button" id="btnCancelarTrem" class="btn-secundario" hidden>Cancelar edição</button>
+            </div>
+        </form>
+
+        <section class="card-lista">
+            <h2>Trens cadastrados</h2>
+            <div class="table-responsive">
+                <table class="table" id="tabelaTrens">
+                    <thead>
+                        <tr><th>Código</th><th>Nome</th><th>Modelo</th><th>Ano</th><th>Capacidade</th><th>Situação</th><th>Rota</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/adicionar-trem.js"></script>
+</body>
+</html>

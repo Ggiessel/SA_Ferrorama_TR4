@@ -86,3 +86,19 @@ function formatarData($data)
 {
     return date("d/m/Y", strtotime($data));
 }
+
+function tiposSensor()
+{
+    return [
+        ["tipo" => "DS18B20", "grandeza" => "Temperatura do motor"],
+        ["tipo" => "MAX6675", "grandeza" => "Temperatura dos gases de escape"],
+        ["tipo" => "MLX90614", "grandeza" => "Temperatura do rolamento"],
+        ["tipo" => "ADXL345", "grandeza" => "Vibração"],
+        ["tipo" => "MPU-6050", "grandeza" => "Vibração e inclinação"],
+        ["tipo" => "A3144", "grandeza" => "Velocidade (sensor Hall na roda)"],
+        ["tipo" => "NEO-6M", "grandeza" => "Localização e velocidade (GPS)"],
+        ["tipo" => "Omnicomm LLS 5", "grandeza" => "Nível e consumo de combustível"],
+        ["tipo" => "MPX5700AP", "grandeza" => "Pressão do freio"],
+        ["tipo" => "DHT22", "grandeza" => "Temperatura e umidade da carga"]
+    ];
+}

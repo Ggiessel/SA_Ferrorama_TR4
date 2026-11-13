@@ -73,6 +73,36 @@
 
 </div>
 
+    <section class="bloco-relatorio">
+        <h2>Resumo dos sensores por trem</h2>
+        <p class="apoio" id="limitesPainel"></p>
+        <div class="table-responsive">
+            <table class="table" id="tabelaResumo">
+                <thead>
+                    <tr><th>Trem</th><th>Leituras</th><th>Velocidade média</th><th>Maior velocidade</th><th>Temperatura média</th><th>Maior temperatura</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="bloco-relatorio">
+        <h2>Velocidade média por trem</h2>
+        <div class="grafico-barras" id="graficoVelocidade"></div>
+    </section>
+
+    <section class="bloco-relatorio">
+        <h2>Últimos alertas dos sensores</h2>
+        <div class="table-responsive">
+            <table class="table" id="tabelaAlertasSensores">
+                <thead>
+                    <tr><th>Data e hora</th><th>Trem</th><th>Falhas identificadas</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/gestao-geral.js"></script>

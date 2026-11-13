@@ -22,7 +22,20 @@ Teste em dupla: um opera, o outro anota. Data da execução: ____/____/______. R
 | 16 | Sair e apertar o botão voltar | Não volta para dentro do sistema | ( ) sim ( ) não | |
 | 17 | Imprimir o relatório | A impressão sai sem menu nem botões | ( ) sim ( ) não | |
 | 18 | Instalação limpa: copiar o projeto para uma pasta nova e seguir só o README | Sistema abre e o login funciona | ( ) sim ( ) não | |
+| 19 | Adicionar Trens: salvar com o código de um trem que já existe (ex.: 8) | Mensagem "Já existe um trem com o código 008", sem gravar | ( ) sim ( ) não | |
+| 20 | Adicionar Trens: cadastrar um trem completo | Aparece na tabela e no painel | ( ) sim ( ) não | |
+| 21 | Adicionar Trens: clicar em Editar, mudar o modelo e salvar | Tabela mostra o modelo novo | ( ) sim ( ) não | |
+| 22 | Adicionar Trens: excluir o Trem 09 depois de registrar uma manutenção para ele | Pede confirmação e mostra que não pode excluir | ( ) sim ( ) não | |
+| 23 | Adicionar Rotas: cadastrar com horário 25:00 | Mensagem de horário inválido, sem gravar | ( ) sim ( ) não | |
+| 24 | Adicionar Rotas: cadastrar rota completa e abrir Gestão de Rotas | A rota nova aparece com os horários | ( ) sim ( ) não | |
+| 25 | Adicionar sensor DS18B20 em um trem que já tem DS18B20 | Mensagem de sensor repetido | ( ) sim ( ) não | |
+| 26 | Simulador: gerar 50 leituras para um trem | Abre Leituras com as 50 leituras e cria um alerta em Alertas | ( ) sim ( ) não | |
+| 27 | Leituras: marcar "Mostrar só leituras com falha" e filtrar | Só aparecem leituras com alerta; valores acima do limite em vermelho | ( ) sim ( ) não | |
+| 28 | Exportar CSV e abrir no Excel | Colunas separadas, com acentos corretos | ( ) sim ( ) não | |
+| 29 | Relatórios: filtrar leituras por trem e período | Resumo e tabela mudam conforme o filtro | ( ) sim ( ) não | |
+| 30 | Entrar como maquinista e tentar abrir `paginas/adicionar-trem.html` | Volta para o menu do maquinista | ( ) sim ( ) não | |
+| 31 | Já logado, abrir a tela de login | Vai direto para o menu | ( ) sim ( ) não | |
 
 ## Itens dos guias que não podem ser testados
 
-Cadastrar, editar e excluir trens; escolher o trem em lista ao cadastrar sensor; simulador de leituras; alertas por severidade; exportação em CSV; desativação de usuários e recuperação de senha. Esses itens não foram implementados e estão registrados nas limitações do README.
+Filtros de rotas por data e trem, severidade dos alertas, desativação de usuários e recuperação de senha. Esses itens não foram implementados e estão registrados nas limitações do README.
