@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Manual do usuário - Ferrorama TR4</title>
+<style>
+    @page { size: A4; margin: 12mm 13mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", "Segoe UI", Arial, sans-serif; font-size: 9.6pt; line-height: 1.38; color: #152c59; }
+    header { display: flex; align-items: center; gap: 12px; padding-bottom: 6px; margin-bottom: 8px; border-bottom: 3px solid #06648c; }
+    header img { width: 92px; }
+    h1 { margin: 0; font-size: 18pt; }
+    header p { margin: 2px 0 0; color: #5b6478; }
+    h2 { margin: 10px 0 5px; padding: 3px 8px; font-size: 11.5pt; color: #fff; background: #06648c; border-radius: 4px; break-after: avoid; }
+    .passos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+    .passo { break-inside: avoid; }
+    .passo img { display: block; width: 100%; border: 1px solid #b9c6e2; border-radius: 4px; }
+    .passo p { margin: 3px 0 0; }
+    .passo b.n { display: inline-block; min-width: 17px; padding: 0 4px; margin-right: 3px; color: #fff; text-align: center; background: #152c59; border-radius: 9px; font-size: 8.5pt; }
+    .celular { display: grid; grid-template-columns: 0.55fr 0.55fr 1.4fr; gap: 10px; align-items: start; }
+    .celular img { width: 100%; border: 1px solid #b9c6e2; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+    th, td { padding: 3px 6px; text-align: left; border: 1px solid #c5d0ec; }
+    th { background: #dce3f3; }
+    .quebra { break-before: page; }
+    .nota { padding: 5px 8px; background: #fff3d1; border-radius: 4px; color: #6b4600; }
+    code { font-size: 8.8pt; }
+</style>
+</head>
+<body>
+<header>
+    <img src="../../img/logoTR4.png" alt="TR4">
+    <div>
+        <h1>Manual do usuário — Ferrorama TR4</h1>
+        <p>Sistema web de gerenciamento ferroviário: trens, sensores, leituras, rotas, viagens, alertas e relatórios.</p>
+    </div>
+</header>
+
+<h2>1. Acesso ao sistema</h2>
+<table>
+    <tr><th>Perfil</th><th>Login de teste (senha 123456)</th><th>O que pode fazer</th></tr>
+    <tr><td>Gestor (administrador)</td><td>gestor@tr4.com</td><td>Tudo: trens, sensores, simulador, rotas, viagens, cargas, manutenção, alertas, relatórios e usuários.</td></tr>
+    <tr><td>Maquinista</td><td>maquinista@tr4.com</td><td>Consulta o próprio trem, seus sensores e leituras, inicia/conclui suas viagens, registra manutenção e gera alertas do seu trem.</td></tr>
+    <tr><td>Cliente (usuário comum)</td><td>cliente@tr4.com</td><td>Consulta rotas ativas, horários, viagens, cargas e avisos públicos.</td></tr>
+</table>
+<div class="passos" style="margin-top:8px">
+    <div class="passo"><img src="../img/01-login.png" alt="Tela de login"><p><b class="n">1</b>Abra <code>http://localhost/SA_Ferrorama_TR4</code>, informe e-mail e senha e clique em <b>Continuar</b>; se esqueceu a senha, use <b>Esqueci minha senha</b> para avisar o gestor.</p></div>
+    <div class="passo"><img src="../img/02-inicio-gestor.png" alt="Início do gestor"><p><b class="n">2</b>Depois de entrar, o <b>Início</b> mostra os módulos do seu perfil e o menu lateral fica sempre visível à esquerda, com o usuário conectado no canto superior direito.</p></div>
+</div>
+
+<h2>2. Painel e trens</h2>
+<div class="passos">
+    <div class="passo"><img src="../img/03-painel.png" alt="Painel"><p><b class="n">3</b>O <b>Painel</b> traz cinco indicadores calculados no banco: trens por situação, alertas ativos por gravidade, sensores com leitura crítica, viagens em andamento e velocidade média da frota.</p></div>
+    <div class="passo"><img src="../img/04-trens-cadastro.png" alt="Cadastro de trem"><p><b class="n">4</b>Em <b>Trens</b>, clique em <b>Novo trem</b> para cadastrar; os ícones de cada linha alteram a situação operacional, editam ou excluem o trem.</p></div>
+</div>
+
+<h2 class="quebra">3. Sensores, simulador e leituras</h2>
+<div class="passos">
+    <div class="passo"><img src="../img/05-sensores.png" alt="Sensores"><p><b class="n">5</b>Em <b>Sensores</b> cada sensor aparece com a leitura mais recente gravada e seu nível; sensores ainda sem leitura mostram <b>Sem leituras</b>.</p></div>
+    <div class="passo"><img src="../img/06-simulador.png" alt="Simulador"><p><b class="n">6</b>No <b>Simulador</b> (gestor), escolha o trem e a quantidade e clique em <b>Gerar leituras</b>: elas são gravadas no banco e classificadas pelos limites.</p></div>
+    <div class="passo"><img src="../img/07-leituras.png" alt="Leituras"><p><b class="n">7</b>Em <b>Leituras</b>, filtre por trem, sensor, grandeza, nível e período; use <b>Exportar CSV</b> para abrir os dados no Excel.</p></div>
+    <div class="passo"><img src="../img/09-alertas.png" alt="Alertas"><p><b class="n">8</b>Em <b>Alertas</b>, os níveis Normal, Atenção e Crítico aparecem separados, com o crítico em vermelho; o gestor pode <b>Resolver</b> e qualquer gestor ou maquinista pode gerar um <b>Novo alerta</b>.</p></div>
+</div>
+
+<h2>4. Rotas, viagens e relatórios</h2>
+<div class="passos">
+    <div class="passo"><img src="../img/08-viagens.png" alt="Viagens"><p><b class="n">9</b>Em <b>Rotas e viagens</b>, a aba <b>Viagens</b> filtra por data, situação, trem e rota; os botões iniciam, concluem, informam atraso ou cancelam a viagem.</p></div>
+    <div class="passo"><img src="../img/10-relatorios.png" alt="Relatórios"><p><b class="n">10</b>Em <b>Relatórios</b>, escolha a aba (desempenho, energia, eficiência ou manutenção), defina o período — a data final é incluída — e use <b>Exportar CSV</b> ou <b>Imprimir</b>.</p></div>
+</div>
+
+<h2 class="quebra">5. Usuários, outros perfis e celular</h2>
+<div class="passos">
+    <div class="passo"><img src="../img/11-usuarios.png" alt="Usuários"><p><b class="n">11</b>Em <b>Usuários</b> (gestor), cadastre contas, altere o perfil, desative ou reative e use o ícone de chave para gerar uma senha temporária, trocada no próximo acesso.</p></div>
+    <div class="passo"><img src="../img/12-maquinista-trem.png" alt="Maquinista"><p><b class="n">12</b>O maquinista vê apenas o próprio trem em <b>Meu trem</b>, sem botões de cadastro ou exclusão, e pode <b>Gerar alerta</b> sobre ele.</p></div>
+</div>
+<div class="celular" style="margin-top:8px">
+    <img src="../img/13-celular-rotas.png" alt="Rotas no celular">
+    <img src="../img/14-celular-menu.png" alt="Menu no celular">
+    <div class="passo">
+        <p><b class="n">13</b>No celular, as tabelas viram cartões com o nome de cada campo, sem rolagem lateral; esta é a tela de rotas do cliente.</p>
+        <p style="margin-top:6px"><b class="n">14</b>O botão <b>☰</b> no cabeçalho abre o menu, que mostra somente as opções do perfil; o <b>X</b> fecha o menu.</p>
+        <p style="margin-top:6px"><b class="n">15</b>Para sair, use <b>Sair</b> no fim do menu; a sessão é encerrada e o botão voltar do navegador não reabre o sistema.</p>
+        <p class="nota" style="margin-top:8px">Limites de alerta (arquivo <code>includes/limites.php</code>): velocidade &gt; 70 km/h atenção e &gt; 80 crítico; temperatura do motor &gt; 95 °C e &gt; 105 °C; consumo &gt; 65 L/h e &gt; 75 L/h; vibração &gt; 5,5 mm/s e &gt; 7 mm/s.</p>
+    </div>
+</div>
+</body>
+</html>

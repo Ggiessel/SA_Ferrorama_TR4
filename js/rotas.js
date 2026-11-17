@@ -111,8 +111,8 @@ iniciarPagina(async (usuario) => {
         const b = [];
         if (v.status === "agendada") b.push(`<button type="button" class="btn-primario btn-pequeno" data-acao="iniciar" data-id="${v.id}">Iniciar</button>`);
         if (["em_andamento", "atrasada"].includes(v.status)) b.push(`<button type="button" class="btn-primario btn-pequeno" data-acao="concluir" data-id="${v.id}">Concluir</button>`);
-        if (v.status === "em_andamento") b.push(`<button type="button" class="btn-secundario btn-pequeno" data-acao="atrasar" data-id="${v.id}">Informar atraso</button>`);
-        if (gestor && ["agendada", "em_andamento", "atrasada"].includes(v.status)) b.push(`<button type="button" class="btn-perigo btn-pequeno" data-acao="cancelar" data-id="${v.id}">Cancelar</button>`);
+        if (v.status === "em_andamento") b.push(`<button type="button" class="btn-icone" data-acao="atrasar" data-id="${v.id}" title="Informar atraso" aria-label="Informar atraso"><i class="bi bi-clock-history"></i></button>`);
+        if (gestor && ["agendada", "em_andamento", "atrasada"].includes(v.status)) b.push(`<button type="button" class="btn-icone perigo" data-acao="cancelar" data-id="${v.id}" title="Cancelar viagem" aria-label="Cancelar viagem"><i class="bi bi-x-circle"></i></button>`);
         if (gestor) b.push(`<button type="button" class="btn-icone" data-editar-viagem="${v.id}" title="Editar" aria-label="Editar viagem"><i class="bi bi-pencil"></i></button>`);
         if (gestor && ["agendada", "cancelada"].includes(v.status)) b.push(`<button type="button" class="btn-icone perigo" data-excluir-viagem="${v.id}" title="Excluir" aria-label="Excluir viagem"><i class="bi bi-trash3"></i></button>`);
         return b.join("");
@@ -124,11 +124,9 @@ iniciarPagina(async (usuario) => {
             <tr>
                 <td>${formatarDataHora(v.partida_prevista)}</td>
                 <td><strong>${escapar(v.rota)}</strong> <small>${escapar(v.origem)} → ${escapar(v.destino)}</small></td>
-                <td>${escapar(v.trem)}</td>
-                <td>${escapar(v.maquinista || "—")}</td>
+                <td>${escapar(v.trem)}${v.maquinista ? `<br><small>${escapar(v.maquinista)}</small>` : ""}</td>
                 <td>${formatarDataHora(v.chegada_prevista)}</td>
-                <td>${formatarDataHora(v.partida_real)}</td>
-                <td>${formatarDataHora(v.chegada_real)}</td>
+                <td>${v.partida_real ? `<small>Partiu ${formatarDataHora(v.partida_real)}${v.chegada_real ? "<br>Chegou " + formatarDataHora(v.chegada_real) : ""}</small>` : "—"}</td>
                 <td>${selo(v.status)}</td>
                 <td><div class="acoes-linha">${acoesViagem(v) || "—"}</div></td>
             </tr>`).join(""), "Nenhuma viagem encontrada para os filtros informados.");

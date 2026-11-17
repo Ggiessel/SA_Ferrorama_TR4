@@ -36,7 +36,7 @@ iniciarPagina(async (usuario) => {
                 <td>${u.pedido_senha_em ? `<span class="valor-atencao">Pediu redefinição</span>` : Number(u.trocar_senha) ? "Troca pendente" : "OK"}</td>
                 <td><div class="acoes-linha">
                     <button type="button" class="btn-icone" data-editar="${u.id}" title="Editar" aria-label="Editar ${escapar(u.nome)}"><i class="bi bi-pencil"></i></button>
-                    <button type="button" class="btn-secundario btn-pequeno" data-senha="${u.id}"><i class="bi bi-key"></i> Redefinir senha</button>
+                    <button type="button" class="btn-icone" data-senha="${u.id}" title="Redefinir senha" aria-label="Redefinir senha de ${escapar(u.nome)}"><i class="bi bi-key"></i></button>
                     ${u.id == usuario.id ? "" : Number(u.ativo)
                         ? `<button type="button" class="btn-perigo btn-pequeno" data-desativar="${u.id}">Desativar</button>`
                         : `<button type="button" class="btn-secundario btn-pequeno" data-ativar="${u.id}">Reativar</button>`}

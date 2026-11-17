@@ -2849,7 +2849,7 @@ body.app {
         padding: 0.55rem 0.5rem;
     }
 
-    .app .table td:has(> .acoes-linha) .acoes-linha:not(:has(.btn-pequeno)) {
+    .app .table .acoes-linha {
         flex-wrap: nowrap;
     }
 }
@@ -2857,4 +2857,52 @@ body.app {
 .app .table {
     --bs-table-bg: var(--fr-branco);
     --bs-table-color: var(--fr-azul-escuro);
+}
+
+/* Menu lateral compacto para caber em telas baixas */
+.app-sidebar-topo {
+    padding: 1rem 1.25rem 0.25rem;
+}
+
+.app-logo img {
+    width: 5.75rem;
+}
+
+.app-nav ul {
+    gap: 0.1rem;
+}
+
+.app-nav a,
+.app-sair {
+    min-height: 2.45rem;
+    padding: 0.35rem 0.85rem;
+}
+
+.app-sair {
+    margin-bottom: 0.75rem;
+    padding-top: 0.6rem;
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .app .table {
+        font-size: 0.85rem;
+    }
+
+    .app .table th {
+        font-size: 0.72rem;
+    }
+
+    .app .table > :not(caption) > * > * {
+        padding: 0.5rem 0.35rem;
+    }
+
+    .app-conteudo {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .app .btn-icone {
+        width: 2rem;
+        height: 2rem;
+    }
 }
