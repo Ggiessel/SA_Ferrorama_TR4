@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Usuários - Ferrorama TR4</title>
+</head>
+<body class="pg-usuarios" data-titulo="Usuários">
+    <main>
+        <div class="barra-modulo">
+            <p class="descricao">Contas de acesso, perfis, desativação e redefinição de senha.</p>
+            <div class="acoes-modulo"><button type="button" class="btn-primario" id="btnNovoUsuario"><i class="bi bi-person-plus"></i> Novo usuário</button></div>
+        </div>
+        <section class="cartao">
+            <form class="filtros" id="filtrosUsuarios">
+                <div class="campo"><label for="buscaUsuario">Buscar</label><input type="search" id="buscaUsuario" name="busca" placeholder="Nome, e-mail ou função"></div>
+                <div class="campo"><label for="filtroCargo">Perfil</label>
+                    <select id="filtroCargo" name="cargo"><option value="">Todos</option><option value="gestor">Gestor</option><option value="maquinista">Maquinista</option><option value="cliente">Cliente</option></select></div>
+                <div class="campo"><label for="filtroAtivo">Situação</label>
+                    <select id="filtroAtivo" name="ativo"><option value="">Todas</option><option value="1">Ativos</option><option value="0">Desativados</option></select></div>
+                <div class="acoes-filtro"><button type="submit" class="btn-primario"><i class="bi bi-funnel"></i> Filtrar</button></div>
+            </form>
+            <div class="table-responsive">
+                <table class="table" id="tabelaUsuarios">
+                    <thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Função</th><th>Trem</th><th>Situação</th><th>Senha</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="tituloModalUsuario" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <form class="modal-content" id="formUsuario" novalidate>
+                    <div class="modal-header"><h2 id="tituloModalUsuario">Novo usuário</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="nomeUsuario">Nome completo</label><input type="text" id="nomeUsuario" maxlength="100"></div>
+                        <div class="campo"><label for="emailUsuario">E-mail</label><input type="email" id="emailUsuario" maxlength="120"></div>
+                        <div class="campo"><label for="cargoUsuario">Perfil de acesso</label>
+                            <select id="cargoUsuario"><option value="cliente">Cliente (usuário comum)</option><option value="maquinista">Maquinista</option><option value="gestor">Gestor (administrador)</option></select></div>
+                        <div class="campo"><label for="tremUsuario">Trem do maquinista</label><select id="tremUsuario"></select></div>
+                        <div class="campo"><label for="funcaoUsuario">Função</label><input type="text" id="funcaoUsuario" maxlength="60" placeholder="Ex.: Analista de cargas"></div>
+                        <div class="campo"><label for="telefoneUsuario">Telefone</label><input type="tel" id="telefoneUsuario" maxlength="20"></div>
+                        <div class="campo"><label for="cpfUsuario">CPF</label><input type="text" id="cpfUsuario" maxlength="14" placeholder="000.000.000-00"></div>
+                        <div class="campo"><label for="nascimentoUsuario">Nascimento</label><input type="date" id="nascimentoUsuario"></div>
+                        <div class="campo"><label for="ativoDesdeUsuario">Ativo desde</label><input type="date" id="ativoDesdeUsuario"></div>
+                        <div class="campo somente-novo"><label for="senhaUsuario">Senha inicial (opcional)</label><input type="password" id="senhaUsuario" autocomplete="new-password" placeholder="Em branco: gerar automaticamente"></div>
+                        <div class="campo largo"><label for="enderecoUsuario">Endereço</label><input type="text" id="enderecoUsuario" maxlength="200"></div>
+                        <p class="apoio largo">O usuário deverá trocar a senha no primeiro acesso.</p>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn-primario" id="btnSalvarUsuario">Salvar</button></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalSenha" tabindex="-1" aria-labelledby="tituloModalSenha" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><h2 id="tituloModalSenha">Senha temporária</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+                    <div class="modal-body">
+                        <p id="textoSenha"></p>
+                        <p class="senha-gerada" id="senhaGerada"></p>
+                        <p class="apoio">Ela é exibida somente agora. No próximo acesso o usuário será obrigado a criar uma nova senha.</p>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn-primario" data-bs-dismiss="modal">Entendi</button></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/usuarios.js"></script>
+</body>
+</html>

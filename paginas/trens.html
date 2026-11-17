@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Trens - Ferrorama TR4</title>
+</head>
+<body class="pg-trens" data-titulo="Trens">
+    <main>
+        <div class="barra-modulo">
+            <p class="descricao" id="descricaoTrens">Frota cadastrada e situação operacional.</p>
+            <div class="acoes-modulo">
+                <a href="alertas.html?novo=1" class="btn-secundario somente-maquinista" hidden><i class="bi bi-exclamation-triangle"></i> Gerar alerta</a>
+                <button type="button" class="btn-primario somente-gestor" id="btnNovoTrem" hidden><i class="bi bi-plus-lg"></i> Novo trem</button>
+            </div>
+        </div>
+
+        <section class="cartao">
+            <form class="filtros somente-gestor" id="filtrosTrens" hidden>
+                <div class="campo">
+                    <label for="buscaTrem">Buscar</label>
+                    <input type="search" id="buscaTrem" name="busca" placeholder="Nome, código ou modelo">
+                </div>
+                <div class="campo">
+                    <label for="filtroStatusTrem">Situação</label>
+                    <select id="filtroStatusTrem" name="status">
+                        <option value="">Todas</option>
+                        <option value="em_rota">Em rota</option>
+                        <option value="disponivel">Disponível</option>
+                        <option value="manutencao">Em manutenção</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+                <div class="acoes-filtro">
+                    <button type="submit" class="btn-primario"><i class="bi bi-funnel"></i> Filtrar</button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table" id="tabelaTrens">
+                    <thead>
+                        <tr><th>Código</th><th>Nome</th><th>Modelo / ano</th><th>Capacidade</th><th>Consumo</th><th>Situação</th><th>Rota</th><th>Maquinista</th><th>Sensores</th><th class="somente-gestor-col">Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="modal fade" id="modalTrem" tabindex="-1" aria-labelledby="tituloModalTrem" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <form class="modal-content" id="formTrem" novalidate>
+                    <div class="modal-header">
+                        <h2 id="tituloModalTrem">Novo trem</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="codigoTrem">Código (até 3 números)</label><input type="text" id="codigoTrem" inputmode="numeric" maxlength="3" placeholder="Ex.: 016" required></div>
+                        <div class="campo"><label for="nomeTrem">Nome</label><input type="text" id="nomeTrem" maxlength="30" placeholder="Ex.: Trem 16" required></div>
+                        <div class="campo"><label for="modeloTrem">Modelo da locomotiva</label><input type="text" id="modeloTrem" maxlength="80" placeholder="Ex.: GE AC44i" required></div>
+                        <div class="campo"><label for="anoTrem">Ano de fabricação</label><input type="number" id="anoTrem" min="1901" placeholder="Ex.: 2015" required></div>
+                        <div class="campo"><label for="capacidadeTrem">Capacidade (toneladas)</label><input type="number" id="capacidadeTrem" min="1" step="0.01" placeholder="Ex.: 6200" required></div>
+                        <div class="campo"><label for="consumoTrem">Consumo nominal (km/L)</label><input type="number" id="consumoTrem" min="0.1" step="0.01" placeholder="Ex.: 13" required></div>
+                        <div class="campo"><label for="statusTrem">Situação</label>
+                            <select id="statusTrem"><option value="disponivel">Disponível</option><option value="em_rota">Em rota</option><option value="manutencao">Em manutenção</option><option value="inativo">Inativo</option></select></div>
+                        <div class="campo"><label for="rotaTrem">Rota atual</label><select id="rotaTrem"></select></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn-primario" id="btnSalvarTrem">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalSituacao" tabindex="-1" aria-labelledby="tituloModalSituacao" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="formSituacao" novalidate>
+                    <div class="modal-header">
+                        <h2 id="tituloModalSituacao">Situação operacional</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="situacaoNova">Situação</label>
+                            <select id="situacaoNova"><option value="disponivel">Disponível</option><option value="em_rota">Em rota</option><option value="manutencao">Em manutenção</option><option value="inativo">Inativo</option></select></div>
+                        <div class="campo"><label for="rotaSituacao">Rota (se em rota)</label><select id="rotaSituacao"></select></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn-primario">Aplicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/trens.js"></script>
+</body>
+</html>

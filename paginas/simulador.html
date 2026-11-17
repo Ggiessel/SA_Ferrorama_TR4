@@ -3,39 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
-    <title>Simulador de Leituras</title>
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Simulador - Ferrorama TR4</title>
 </head>
-<body class="pg-form pg-form-duplo">
-    <h1><i class="bi bi-arrow-left-short"></i>Simulador de Leituras</h1>
+<body class="pg-simulador-v2" data-titulo="Simulador">
+    <main>
+        <section class="cartao">
+            <h2><i class="bi bi-sliders"></i> Gerar leituras</h2>
+            <p class="apoio">O simulador sorteia valores plausíveis para cada sensor ativo do trem (a maioria normais, alguns em atenção e poucos críticos), uma leitura a cada 5 minutos terminando agora. As leituras são gravadas no banco, classificadas pelos limites de <code>includes/limites.php</code> e geram alertas quando necessário.</p>
+            <form class="grade-form" id="formSimulador" novalidate>
+                <div class="campo"><label for="tremSimulador">Trem</label><select id="tremSimulador"></select></div>
+                <div class="campo"><label for="sensorSimulador">Sensor</label><select id="sensorSimulador"></select></div>
+                <div class="campo"><label for="quantidadeSimulador">Leituras por sensor (1 a 100)</label><input type="number" id="quantidadeSimulador" min="1" max="100" value="12"></div>
+                <div class="campo"><label>&nbsp;</label><button type="submit" class="btn-primario w-100" id="btnSimular"><i class="bi bi-play-fill"></i> Gerar leituras</button></div>
+            </form>
+        </section>
 
-    <main class="conteudo">
-        <div class="campo">
-            <label for="tremSimulador">Escolha o trem:</label>
-            <select id="tremSimulador"></select>
-        </div>
+        <section class="cartao" id="resultadoSimulador" hidden>
+            <h2><i class="bi bi-check2-circle"></i> Resultado</h2>
+            <div class="resumo-v2" id="resumoSimulador"></div>
+            <a class="btn-secundario" id="linkLeituras" href="leituras.html">Ver leituras geradas</a>
+        </section>
 
-        <div class="campo">
-            <label for="quantidadeSimulador">Quantidade de leituras:</label>
-            <input type="number" id="quantidadeSimulador" min="1" max="200" value="50">
-        </div>
-
-        <div class="info-box">
-            <i class="bi bi-info-circle"></i>
-            <p>Gera uma leitura a cada cinco minutos, terminando no horário atual. Substitui os sensores físicos enquanto eles não enviam dados.</p>
-        </div>
-
-        <div class="acoes">
-            <button type="button" class="btn-primario btn-grande btn-simular">Gerar leituras</button>
-        </div>
+        <section class="cartao">
+            <h2><i class="bi bi-rulers"></i> Limites utilizados</h2>
+            <div class="table-responsive">
+                <table class="table" id="tabelaLimites">
+                    <thead><tr><th>Grandeza</th><th>Unidade</th><th>Atenção</th><th>Crítico</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/simulador.js"></script>
 </body>

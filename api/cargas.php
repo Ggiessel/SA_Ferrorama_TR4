@@ -2,11 +2,18 @@
 
 require "conexao.php";
 
+/*
+ * Cargas. GET (todos os perfis, filtro status) | POST cadastra (gestor) | POST ?acao=avancar simula o avanço (gestor)
+ */
+
 $usuario = exigirCargo();
-$metodo = $_SERVER["REQUEST_METHOD"];
+$metodo = metodo();
 $acao = $_GET["acao"] ?? "";
 
 if ($metodo === "POST" && $acao === "avancar") {
+    if (!eGestor($usuario)) {
+        erro("Só o gestor pode atualizar o andamento das cargas.", null, 403);
+    }
     $entregues = [];
 
     foreach (consultar("SELECT * FROM cargas WHERE status = 'em_transito'") as $carga) {
@@ -17,7 +24,7 @@ if ($metodo === "POST" && $acao === "avancar") {
 
         if ($status === "entregue") {
             $mensagem = $carga["tipo"] . " chegou em " . $carga["destino"] . ".";
-            criarAlerta("Carga entregue: " . $mensagem);
+            criarAlerta("Carga entregue: " . $mensagem, "normal", ["publico" => true]);
             $entregues[] = $mensagem;
         }
     }
@@ -31,21 +38,21 @@ if ($metodo === "POST") {
     }
 
     $dados = dadosRecebidos();
-    $tipo = $dados["tipo"] ?? "";
+    $tipo = trim((string) ($dados["tipo"] ?? ""));
     $toneladas = (int) ($dados["toneladas"] ?? 0);
-    $destino = $dados["destino"] ?? "";
-    $partida = $dados["partida"] ?? "";
+    $destino = trim((string) ($dados["destino"] ?? ""));
+    $partida = (string) ($dados["partida"] ?? "");
 
-    if ($tipo === "") {
+    if ($tipo === "" || mb_strlen($tipo) > 60) {
         erro("Escolha qual carga o trem vai levar.", "tipoCarga");
     }
-    if ($toneladas <= 0) {
+    if ($toneladas <= 0 || $toneladas > 100000) {
         erro("Escolha o tamanho da carga.", "tamanhoCarga");
     }
-    if ($destino === "") {
+    if ($destino === "" || mb_strlen($destino) > 80) {
         erro("Escolha o destino da carga.", "destinoCarga");
     }
-    if ($partida === "" || $partida < hoje()) {
+    if (!dataValida($partida) || $partida < hoje()) {
         erro("Escolha uma data de partida a partir de hoje.", "dataPartida");
     }
 
@@ -56,14 +63,14 @@ if ($metodo === "POST") {
         [$tipo, $toneladas, $destino, $partida, $status]
     );
 
-    criarAlerta("Nova carga cadastrada: $tipo ($toneladas t) para $destino, partida em " . formatarData($partida) . ".");
+    criarAlerta("Nova carga cadastrada: $tipo ($toneladas t) para $destino, partida em " . formatarData($partida) . ".", "normal", ["publico" => true]);
 
     responder(["ok" => true], 201);
 }
 
 executar("UPDATE cargas SET status = 'em_transito' WHERE status = 'aguardando' AND partida <= ?", [hoje()]);
 
-if (!empty($_GET["status"])) {
+if (in_array($_GET["status"] ?? "", ["aguardando", "em_transito", "entregue"], true)) {
     responder(consultar("SELECT * FROM cargas WHERE status = ? ORDER BY partida", [$_GET["status"]]));
 }
 

@@ -2,15 +2,19 @@
 
 require "conexao.php";
 
+if (metodo() !== "POST") {
+    erro("Use POST para criar a conta.", null, 405);
+}
+
 $dados = dadosRecebidos();
 $nome = trim($dados["nome"] ?? "");
 $email = trim($dados["email"] ?? "");
-$senha = $dados["senha"] ?? "";
+$senha = (string) ($dados["senha"] ?? "");
 
-if (strlen($nome) < 3) {
+if (mb_strlen($nome) < 3 || mb_strlen($nome) > 100) {
     erro("Digite seu nome (pelo menos 3 letras).", "nomeCadastro");
 }
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 120) {
     erro("Digite um e-mail válido.", "emailCadastro");
 }
 if (strlen($senha) < 6) {
@@ -23,13 +27,12 @@ if (consultar("SELECT id FROM usuarios WHERE email = ?", [$email])) {
     erro("Esse e-mail já tem conta.", "emailCadastro");
 }
 
+// O cadastro público sempre cria um usuário comum (cliente). O perfil é definido no servidor.
 executar(
-    "INSERT INTO usuarios (nome, email, senha, cargo, ativo_desde) VALUES (?, ?, ?, ?, ?)",
-    [$nome, $email, password_hash($senha, PASSWORD_DEFAULT), "cliente", hoje()]
+    "INSERT INTO usuarios (nome, email, senha, cargo, ativo, ativo_desde) VALUES (?, ?, ?, 'cliente', 1, ?)",
+    [$nome, $email, password_hash($senha, PASSWORD_DEFAULT), hoje()]
 );
 
-$usuario = consultar("SELECT id, nome, email, cargo, nascimento, ativo_desde, telefone FROM usuarios WHERE email = ?", [$email])[0];
-session_regenerate_id(true);
-$_SESSION["usuario"] = $usuario;
+iniciarSessaoUsuario(ultimoId());
 
-responder($usuario, 201);
+responder(usuarioLogado(), 201);

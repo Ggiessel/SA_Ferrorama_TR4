@@ -3,46 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
-    <title>Manutenção</title>
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Manutenção - Ferrorama TR4</title>
 </head>
-<body class="pg-form pg-form-duplo">
+<body class="pg-manutencao-v2" data-titulo="Manutenção">
+    <main>
+        <div class="barra-modulo">
+            <p class="descricao" id="descricaoManutencao">Manutenções registradas na frota.</p>
+            <div class="acoes-modulo"><button type="button" class="btn-primario" id="btnNovaManutencao"><i class="bi bi-plus-lg"></i> Registrar manutenção</button></div>
+        </div>
+        <section class="cartao">
+            <form class="filtros" id="filtrosManutencao">
+                <div class="campo somente-gestor" hidden><label for="filtroTremManutencao">Trem</label><select id="filtroTremManutencao" name="trem_id"></select></div>
+                <div class="campo"><label for="filtroStatusManutencao">Situação</label>
+                    <select id="filtroStatusManutencao" name="status"><option value="">Todas</option><option value="aberta">Aberta</option><option value="em_andamento">Em andamento</option><option value="concluida">Concluída</option></select></div>
+                <div class="campo"><label for="filtroTipoManutencao">Tipo</label>
+                    <select id="filtroTipoManutencao" name="tipo"><option value="">Todos</option><option value="preventiva">Preventiva</option><option value="corretiva">Corretiva</option></select></div>
+                <div class="campo"><label for="manDataInicial">Data inicial</label><input type="date" id="manDataInicial" name="data_inicial"></div>
+                <div class="campo"><label for="manDataFinal">Data final</label><input type="date" id="manDataFinal" name="data_final"></div>
+                <div class="acoes-filtro"><button type="submit" class="btn-primario"><i class="bi bi-funnel"></i> Filtrar</button></div>
+            </form>
+            <div class="table-responsive">
+                <table class="table" id="tabelaManutencoes">
+                    <thead><tr><th>Abertura</th><th>Trem</th><th>Causa / tipo</th><th>Rota</th><th>Situação</th><th>Custo</th><th>Conclusão</th><th>Responsável</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
 
-    <h1><i class="bi bi-list"></i>Manutenção</h1>
-
-    <main class="conteudo">
-        <div class="campo">
-            <label for="codigoTrem">Informe o código do trem:</label>
-            <input type="text" id="codigoTrem" placeholder="EX: 008" inputmode="numeric" maxlength="3">
+        <div class="modal fade" id="modalManutencao" tabindex="-1" aria-labelledby="tituloModalManutencao" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form class="modal-content" id="formManutencao" novalidate>
+                    <div class="modal-header"><h2 id="tituloModalManutencao">Registrar manutenção</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="codigoTrem">Trem</label><select id="codigoTrem"></select></div>
+                        <div class="campo"><label for="tipoManutencao">Tipo</label><select id="tipoManutencao"><option value="corretiva">Corretiva</option><option value="preventiva">Preventiva</option></select></div>
+                        <div class="campo"><label for="rotaManutencao">Rota (opcional)</label><select id="rotaManutencao"></select></div>
+                        <div class="campo"><label for="cargaManutencao">Carga no momento (opcional)</label><input type="text" id="cargaManutencao" maxlength="60"></div>
+                        <div class="campo largo"><label for="causaManutencao">Causa</label><input type="text" id="causaManutencao" maxlength="200" placeholder="Ex.: Freio, Motor, Rolamento"></div>
+                        <p class="apoio largo">Ao registrar, o trem passa para a situação "Em manutenção" e um alerta é gerado.</p>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn-primario" id="btnSalvarManutencao">Registrar</button></div>
+                </form>
+            </div>
         </div>
 
-        <div class="campo">
-            <label for="rotaManutencao">Informe qual era a rota:</label>
-            <select id="rotaManutencao"></select>
-        </div>
-
-        <div class="campo">
-            <label for="cargaManutencao">Informe qual era a carga:</label>
-            <select id="cargaManutencao"></select>
-        </div>
-
-        <div class="campo">
-            <label for="causaManutencao">Informe a causa:</label>
-            <input type="text" id="causaManutencao" placeholder="EX: Batida">
-        </div>
-
-        <div class="acoes">
-            <button type="button" class="btn-primario btn-grande save-btn">Enviar</button>
-            <button type="button" class="btn-secundario pdf-btn">Salvar como PDF</button>
+        <div class="modal fade" id="modalAtualizar" tabindex="-1" aria-labelledby="tituloModalAtualizar" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="formAtualizar" novalidate>
+                    <div class="modal-header"><h2 id="tituloModalAtualizar">Atualizar manutenção</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="statusManutencao">Situação</label><select id="statusManutencao"><option value="aberta">Aberta</option><option value="em_andamento">Em andamento</option><option value="concluida">Concluída</option></select></div>
+                        <div class="campo"><label for="custoManutencao">Custo (R$)</label><input type="number" id="custoManutencao" min="0" step="0.01"></div>
+                        <div class="campo"><label for="conclusaoManutencao">Data de conclusão</label><input type="date" id="conclusaoManutencao"></div>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn-primario">Salvar</button></div>
+                </form>
+            </div>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/manutencao.js"></script>
 </body>

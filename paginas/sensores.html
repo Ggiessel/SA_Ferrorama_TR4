@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Sensores - Ferrorama TR4</title>
+</head>
+<body class="pg-sensores-v2" data-titulo="Sensores">
+    <main>
+        <div class="barra-modulo">
+            <p class="descricao">Sensores instalados nos trens, com a leitura mais recente registrada no banco.</p>
+            <div class="acoes-modulo">
+                <a href="leituras.html" class="btn-secundario"><i class="bi bi-activity"></i> Ver leituras</a>
+                <button type="button" class="btn-primario somente-gestor" id="btnNovoSensor" hidden><i class="bi bi-plus-lg"></i> Novo sensor</button>
+            </div>
+        </div>
+
+        <section class="cartao">
+            <form class="filtros" id="filtrosSensores">
+                <div class="campo"><label for="buscaSensor">Buscar</label><input type="search" id="buscaSensor" name="busca" placeholder="Modelo, grandeza ou trem"></div>
+                <div class="campo somente-gestor" hidden><label for="filtroTremSensor">Trem</label><select id="filtroTremSensor" name="trem_id"></select></div>
+                <div class="campo"><label for="filtroStatusSensor">Situação</label>
+                    <select id="filtroStatusSensor" name="status"><option value="">Todas</option><option value="ativo">Ativo</option><option value="instalacao">Em instalação</option><option value="remocao">Em remoção</option><option value="inativo">Inativo</option></select></div>
+                <div class="campo"><label for="filtroNivelSensor">Última leitura</label>
+                    <select id="filtroNivelSensor" name="nivel"><option value="">Todas</option><option value="normal">Normal</option><option value="atencao">Atenção</option><option value="critico">Crítico</option></select></div>
+                <div class="acoes-filtro"><button type="submit" class="btn-primario"><i class="bi bi-funnel"></i> Filtrar</button></div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table" id="tabelaSensores">
+                    <thead>
+                        <tr><th>Trem</th><th>Sensor</th><th>Grandeza</th><th>Situação</th><th>Última leitura</th><th>Nível</th><th>Data da leitura</th><th>Leituras</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="modal fade" id="modalSensor" tabindex="-1" aria-labelledby="tituloModalSensor" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form class="modal-content" id="formSensor" novalidate>
+                    <div class="modal-header">
+                        <h2 id="tituloModalSensor">Novo sensor</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="tipoSensor">Modelo do sensor</label><select id="tipoSensor"></select></div>
+                        <div class="campo"><label for="tremSensor">Trem</label><select id="tremSensor"></select></div>
+                        <div class="campo"><label for="statusSensor">Situação</label>
+                            <select id="statusSensor"><option value="instalacao">Em instalação</option><option value="ativo">Ativo</option><option value="remocao">Em remoção</option><option value="inativo">Inativo</option></select></div>
+                        <div class="campo"><label for="prazoSensor">Prazo (instalação/remoção)</label><input type="date" id="prazoSensor"></div>
+                        <div class="campo largo"><label for="observacaoSensor">Observação</label><input type="text" id="observacaoSensor" maxlength="200" placeholder="Opcional"></div>
+                        <p class="apoio largo" id="limiteSensor"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn-primario" id="btnSalvarSensor">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/sensores.js"></script>
+</body>
+</html>

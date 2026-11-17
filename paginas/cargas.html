@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../css/ferrorama-bootstrap.css">
+    <link rel="icon" href="../img/logo_TR4.png">
+    <title>Cargas - Ferrorama TR4</title>
+</head>
+<body class="pg-cargas-v2" data-titulo="Cargas">
+    <main>
+        <div class="barra-modulo">
+            <p class="descricao">Cargas cadastradas e andamento do transporte.</p>
+            <div class="acoes-modulo">
+                <button type="button" class="btn-secundario somente-gestor" id="btnAvancar" hidden><i class="bi bi-fast-forward"></i> Atualizar andamento</button>
+                <button type="button" class="btn-primario somente-gestor" id="btnNovaCarga" hidden><i class="bi bi-plus-lg"></i> Nova carga</button>
+            </div>
+        </div>
+        <section class="cartao">
+            <form class="filtros" id="filtrosCargas">
+                <div class="campo"><label for="filtroStatusCarga">Situação</label>
+                    <select id="filtroStatusCarga" name="status"><option value="">Todas</option><option value="aguardando">Aguardando</option><option value="em_transito">Em trânsito</option><option value="entregue">Entregue</option></select></div>
+                <div class="acoes-filtro"><button type="submit" class="btn-primario"><i class="bi bi-funnel"></i> Filtrar</button></div>
+            </form>
+            <div class="table-responsive">
+                <table class="table" id="tabelaCargas">
+                    <thead><tr><th>Carga</th><th>Tamanho</th><th>Destino</th><th>Partida</th><th>Situação</th><th>Progresso</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="modal fade" id="modalCarga" tabindex="-1" aria-labelledby="tituloModalCarga" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="formCarga" novalidate>
+                    <div class="modal-header"><h2 id="tituloModalCarga">Nova carga</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+                    <div class="modal-body grade-form">
+                        <div class="campo"><label for="tipoCarga">Carga</label><select id="tipoCarga"></select></div>
+                        <div class="campo"><label for="tamanhoCarga">Tamanho (t)</label><select id="tamanhoCarga"></select></div>
+                        <div class="campo"><label for="destinoCarga">Destino</label><select id="destinoCarga"></select></div>
+                        <div class="campo"><label for="dataPartida">Partida</label><input type="date" id="dataPartida"></div>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn-secundario" data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn-primario" id="btnSalvarCarga">Cadastrar</button></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="../vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/cargas.js"></script>
+</body>
+</html>
